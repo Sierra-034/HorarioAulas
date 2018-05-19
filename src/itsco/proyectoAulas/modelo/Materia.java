@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package itsco.modelo;
+package itsco.proyectoAulas.modelo;
 
 /**
  *
  * @author Samuel Gomez
  */
-public class Grupo {
+public class Materia {
     
 }
