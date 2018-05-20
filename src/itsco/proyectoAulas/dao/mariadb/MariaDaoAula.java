@@ -23,11 +23,11 @@ import java.util.logging.Logger;
 public class MariaDaoAula implements DaoAula{
     
     private final String[] COLUMNAS = {"ID_AULA", "NUMERO_SILLAS"};
-    private final String INSERT = "INSERT INTO aula (NUMERO_SILLAS) VALUES (?)";
-    private final String UPDATE = "UPDATE aula SET NUMERO_SILLAS = ? WHERE ID_AULA = ?";
-    private final String DELETE = "DELETE FROM aula WHERE ID_AULA = ?";
-    private final String SELECT = "SELECT * FROM aula WHERE ID_AULA = ?";
-    private final String SELECT_ALL = "SELECT * FROM aula";
+    private final String INSERT = "INSERT INTO aulas (NUMERO_SILLAS) VALUES (?)";
+    private final String UPDATE = "UPDATE aulas SET NUMERO_SILLAS = ? WHERE ID_AULA = ?";
+    private final String DELETE = "DELETE FROM aulas WHERE ID_AULA = ?";
+    private final String SELECT = "SELECT * FROM aulas WHERE ID_AULA = ?";
+    private final String SELECT_ALL = "SELECT * FROM aulas";
     private final Connection mariaConnection;
 
     public MariaDaoAula(Connection mariaConnection) {
