@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author Samuel Gomez
  */
-public class MariaDaoGrupo implements DaoGrupo{
+class MariaDaoGrupo implements DaoGrupo{
     
     private final String[] COLUMNAS = {"ID_GRUPO", "NUMERO_ALUMNOS", "CLAVE_CARRERA"};
     private final String INSERT = "INSERT INTO grupos (NUMERO_ALUMNOS, CLAVE_CARRERA) VALUES (?, ?)";

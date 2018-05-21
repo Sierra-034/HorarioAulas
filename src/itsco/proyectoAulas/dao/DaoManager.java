@@ -5,13 +5,14 @@
  */
 package itsco.proyectoAulas.dao;
 
-import itsco.proyectoAulas.modelo.Docente;
-import java.util.ArrayList;
-
 /**
  *
  * @author Samuel Gomez
  */
-public interface DaoDocente extends GenericDao<Docente, Integer>{
+public interface DaoManager {
     
+    DaoAula createDaoAula();
+    DaoDocente createDaoDocente();
+    DaoGrupo createDaoGrupo();
+    DaoMateria createDaoMateria();
 }

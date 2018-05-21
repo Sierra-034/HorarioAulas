@@ -3,15 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package itsco.proyectoAulas.dao;
-
-import itsco.proyectoAulas.modelo.Docente;
-import java.util.ArrayList;
+package itsco.proyectoAulas.application;
 
 /**
  *
  * @author Samuel Gomez
  */
-public interface DaoDocente extends GenericDao<Docente, Integer>{
+public class Application {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+    }
     
 }

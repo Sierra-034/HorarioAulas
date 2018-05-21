@@ -12,11 +12,6 @@ import java.util.ArrayList;
  *
  * @author Samuel Gomez
  */
-public interface DaoAula {
+public interface DaoAula extends GenericDao<Aula, Integer>{
     
-    void insert(Aula aula);
-    void update(Aula aula);
-    void delete(Aula aula);
-    Aula select(Integer idAula);
-    ArrayList<Aula> selectAll();
 }

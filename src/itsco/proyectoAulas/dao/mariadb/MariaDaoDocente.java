@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author Samuel Gomez
  */
-public class MariaDaoDocente implements DaoDocente{
+class MariaDaoDocente implements DaoDocente{
     
     private final String[] COLUMNAS = {"ID_DOCENTE", "NOMBRE", "ACADEMIA"};
     private final String INSERT = "INSERT INTO docentes (NOMBRE, ACADEMIA) VALUES(?, ?)";

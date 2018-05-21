@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author Samuel Gomez
  */
-public class MariaDaoAula implements DaoAula{
+class MariaDaoAula implements DaoAula{
     
     private final String[] COLUMNAS = {"ID_AULA", "NUMERO_SILLAS"};
     private final String INSERT = "INSERT INTO aulas (NUMERO_SILLAS) VALUES (?)";
