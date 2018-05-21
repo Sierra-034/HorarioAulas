@@ -3,19 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package itsco.proyectoAulas.application;
+package itsco.aulas.dao;
+
+import itsco.aulas.modelo.Grupo;
 
 /**
  *
  * @author Samuel Gomez
  */
-public class Application {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-    }
+public interface DaoGrupo extends GenericDao<Grupo, Integer>{
     
 }

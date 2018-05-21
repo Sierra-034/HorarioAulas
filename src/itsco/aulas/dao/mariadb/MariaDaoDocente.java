@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package itsco.proyectoAulas.dao.mariadb;
+package itsco.aulas.dao.mariadb;
 
-import itsco.proyectoAulas.dao.DaoDocente;
-import itsco.proyectoAulas.modelo.Docente;
+import itsco.aulas.dao.DaoDocente;
+import itsco.aulas.modelo.Docente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

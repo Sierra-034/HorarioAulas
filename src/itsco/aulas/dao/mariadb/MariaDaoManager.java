@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package itsco.proyectoAulas.dao.mariadb;
+package itsco.aulas.dao.mariadb;
 
-import itsco.proyectoAulas.dao.DaoAula;
-import itsco.proyectoAulas.dao.DaoDocente;
-import itsco.proyectoAulas.dao.DaoGrupo;
-import itsco.proyectoAulas.dao.DaoManager;
-import itsco.proyectoAulas.dao.DaoMateria;
-import itsco.proyectoAulas.dao.mariadb.MariaDaoAula;
-import itsco.proyectoAulas.dao.mariadb.MariaDaoDocente;
-import itsco.proyectoAulas.dao.mariadb.MariaDaoGrupo;
-import itsco.proyectoAulas.dao.mariadb.MariaDaoMateria;
+import itsco.aulas.dao.DaoAula;
+import itsco.aulas.dao.DaoDocente;
+import itsco.aulas.dao.DaoGrupo;
+import itsco.aulas.dao.DaoManager;
+import itsco.aulas.dao.DaoMateria;
+import itsco.aulas.dao.mariadb.MariaDaoAula;
+import itsco.aulas.dao.mariadb.MariaDaoDocente;
+import itsco.aulas.dao.mariadb.MariaDaoGrupo;
+import itsco.aulas.dao.mariadb.MariaDaoMateria;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

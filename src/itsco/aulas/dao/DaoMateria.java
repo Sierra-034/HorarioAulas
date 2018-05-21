@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package itsco.proyectoAulas.dao;
+package itsco.aulas.dao;
 
-import itsco.proyectoAulas.modelo.Materia;
+import itsco.aulas.modelo.Materia;
 
 /**
  *

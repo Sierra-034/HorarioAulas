@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package itsco.proyectoAulas.dao;
+package itsco.aulas.dao;
+
+import itsco.aulas.modelo.Docente;
+import java.util.ArrayList;
 
 /**
  *
  * @author Samuel Gomez
  */
-public interface DaoManager {
+public interface DaoDocente extends GenericDao<Docente, Integer>{
     
-    DaoAula createDaoAula();
-    DaoDocente createDaoDocente();
-    DaoGrupo createDaoGrupo();
-    DaoMateria createDaoMateria();
 }

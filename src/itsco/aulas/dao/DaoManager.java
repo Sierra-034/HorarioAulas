@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package itsco.proyectoAulas.dao;
-
-import itsco.proyectoAulas.modelo.Grupo;
+package itsco.aulas.dao;
 
 /**
  *
  * @author Samuel Gomez
  */
-public interface DaoGrupo extends GenericDao<Grupo, Integer>{
+public interface DaoManager {
     
+    DaoAula createDaoAula();
+    DaoDocente createDaoDocente();
+    DaoGrupo createDaoGrupo();
+    DaoMateria createDaoMateria();
 }
