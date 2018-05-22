@@ -11,6 +11,6 @@ import itsco.aulas.modelo.Materia;
  *
  * @author Samuel Gomez
  */
-public interface DaoMateria extends GenericDao<Materia, Integer>{
+public interface DaoMateria extends GenericDao<Materia, String>{
     
 }
