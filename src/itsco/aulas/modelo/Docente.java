@@ -11,23 +11,24 @@ package itsco.aulas.modelo;
  */
 public class Docente {
     
-    private Integer idDocente;
+    private String idDocente;
     private String nombre;
     private String academia;
 
-    public Docente(String nombre, String academia) {
+    public Docente(String idDocente, String nombre, String academia) {
+        this.idDocente = idDocente;
         this.nombre = nombre;
         this.academia = academia;
     }
 
-    public Integer getIdDocente() {
+    public String getIdDocente() {
         return idDocente;
     }
 
-    public void setIdDocente(Integer idDocente) {
+    public void setIdDocente(String idDocente) {
         this.idDocente = idDocente;
     }
-
+    
     public String getNombre() {
         return nombre;
     }
@@ -46,9 +47,7 @@ public class Docente {
 
     @Override
     public String toString() {
-        String str = String.format("[%d, %s, %s]", idDocente, nombre, academia);
-        return str;
+        return "Docente{" + "idDocente=" + idDocente + ", nombre=" + nombre + ", academia=" + academia + '}';
     }
-    
-    
+       
 }

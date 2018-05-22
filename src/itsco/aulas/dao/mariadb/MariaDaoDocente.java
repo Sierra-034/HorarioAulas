@@ -43,7 +43,7 @@ class MariaDaoDocente implements DaoDocente{
             insertStatement.executeUpdate();
             ResultSet rs = insertStatement.getGeneratedKeys();
             if(rs.next())
-                docente.setIdDocente(rs.getInt(COLUMNAS[0]));
+                docente.setIdDocente(rs.getString(COLUMNAS[0]));
             
         } catch (SQLException ex) {
             Logger.getLogger(MariaDaoDocente.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,7 +56,7 @@ class MariaDaoDocente implements DaoDocente{
             PreparedStatement updateStatement = mariaConnection.prepareStatement(UPDATE);
             updateStatement.setString(1, docente.getNombre());
             updateStatement.setString(2, docente.getAcademia());
-            updateStatement.setInt(3, docente.getIdDocente());
+            updateStatement.setString(3, docente.getIdDocente());
             updateStatement.executeUpdate();
             
         } catch (SQLException ex) {
@@ -68,7 +68,7 @@ class MariaDaoDocente implements DaoDocente{
     public void delete(Docente docente) {
         try {
             PreparedStatement deleteStatement = mariaConnection.prepareStatement(DELETE);
-            deleteStatement.setInt(1, docente.getIdDocente());
+            deleteStatement.setString(1, docente.getIdDocente());
             deleteStatement.executeUpdate();
             
         } catch (SQLException ex) {
@@ -77,18 +77,17 @@ class MariaDaoDocente implements DaoDocente{
     }
 
     @Override
-    public Docente select(Integer idDocente) {
+    public Docente select(String idDocente) {
         Docente docenteSolicitado = null;
         
         try {
             PreparedStatement selectStatement = mariaConnection.prepareStatement(SELECT);
-            selectStatement.setInt(1, idDocente);
+            selectStatement.setString(1, idDocente);
             ResultSet rs = selectStatement.executeQuery();
             if(rs.next()) {
                 String nombre = rs.getString(COLUMNAS[1]);
                 String academia = rs.getString(COLUMNAS[2]);
-                docenteSolicitado = new Docente(nombre, academia);
-                docenteSolicitado.setIdDocente(idDocente);
+                docenteSolicitado = new Docente(idDocente, nombre, academia);
             }
             
         } catch (SQLException ex) {
@@ -106,10 +105,10 @@ class MariaDaoDocente implements DaoDocente{
             PreparedStatement selectAllStatement = mariaConnection.prepareStatement(SELECT_ALL);
             ResultSet rs = selectAllStatement.executeQuery();
             while(rs.next()) {
-                Integer idDocente = rs.getInt(COLUMNAS[0]);
+                String idDocente = rs.getString(COLUMNAS[0]);
                 String nombre = rs.getString(COLUMNAS[1]);
                 String academia = rs.getString(COLUMNAS[2]);
-                Docente docente = new Docente(nombre, academia);
+                Docente docente = new Docente(idDocente, nombre, academia);
                 registros.add(docente);
             }
         } catch (SQLException ex) {
