@@ -11,18 +11,18 @@ package itsco.aulas.modelo;
  */
 public class Aula {
     
-    private Integer idAula;
+    private String idAula;
     private Integer numeroSillas;
     
     public Aula(int nSillas) {
         numeroSillas = nSillas;
     }
 
-    public Integer getIdAula() {
+    public String getIdAula() {
         return idAula;
     }
 
-    public void setIdAula(Integer idAula) {
+    public void setIdAula(String idAula) {
         this.idAula = idAula;
     }
 
@@ -36,8 +36,8 @@ public class Aula {
 
     @Override
     public String toString() {
-        String str = String.format("[%d, %d]", idAula, numeroSillas);
-        return str;
+        return "Aula{" + "idAula=" + idAula + ", numeroSillas=" + numeroSillas + '}';
     }
+    
     
 }

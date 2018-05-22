@@ -42,7 +42,7 @@ class MariaDaoAula implements DaoAula{
             insertStatement.executeUpdate();
             ResultSet generatedKeys = insertStatement.getGeneratedKeys();
             if(generatedKeys.next())
-                aula.setIdAula(generatedKeys.getInt(COLUMNAS[0]));
+                aula.setIdAula(generatedKeys.getString(COLUMNAS[0]));
             
         } catch (SQLException ex) {
             Logger.getLogger(MariaDaoAula.class.getName()).log(Level.SEVERE, null, ex);
@@ -54,7 +54,7 @@ class MariaDaoAula implements DaoAula{
         try {
             PreparedStatement updateStatment = mariaConnection.prepareStatement(UPDATE);
             updateStatment.setInt(1, aula.getNumeroSillas());
-            updateStatment.setInt(2, aula.getIdAula());
+            updateStatment.setString(2, aula.getIdAula());
             updateStatment.executeUpdate();
             
         } catch (SQLException ex) {
@@ -66,7 +66,7 @@ class MariaDaoAula implements DaoAula{
     public void delete(Aula aula) {
         try {
             PreparedStatement deleteStatement = mariaConnection.prepareStatement(DELETE);
-            deleteStatement.setInt(1, aula.getIdAula());
+            deleteStatement.setString(1, aula.getIdAula());
             deleteStatement.executeUpdate();
             
         } catch (SQLException ex) {
@@ -75,12 +75,12 @@ class MariaDaoAula implements DaoAula{
     }
 
     @Override
-    public Aula select(Integer idAula) {
+    public Aula select(String idAula) {
         Aula aulaSolicitada = null;
         
         try {
             PreparedStatement selectStatement = mariaConnection.prepareStatement(SELECT);
-            selectStatement.setInt(1, idAula);
+            selectStatement.setString(1, idAula);
             ResultSet rs = selectStatement.executeQuery();
             
             if(rs.next()) {
@@ -104,7 +104,7 @@ class MariaDaoAula implements DaoAula{
             PreparedStatement selectAllStatement = mariaConnection.prepareStatement(SELECT_ALL);
             ResultSet rs = selectAllStatement.executeQuery();
             while(rs.next()) {
-                Integer idAula = rs.getInt(COLUMNAS[0]);
+                String idAula = rs.getString(COLUMNAS[0]);
                 Integer numeroSillas = rs.getInt(COLUMNAS[1]);
                 Aula aulaListada = new Aula(numeroSillas);
                 aulaListada.setIdAula(idAula);

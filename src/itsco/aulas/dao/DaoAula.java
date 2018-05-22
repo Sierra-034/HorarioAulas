@@ -12,6 +12,6 @@ import java.util.ArrayList;
  *
  * @author Samuel Gomez
  */
-public interface DaoAula extends GenericDao<Aula, Integer>{
+public interface DaoAula extends GenericDao<Aula, String>{
     
 }

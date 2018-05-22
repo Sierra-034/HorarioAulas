@@ -30,7 +30,7 @@ public class MariaDaoManager implements DaoManager {
     private DaoMateria daoMateria;
     
     private static DaoManager manager;
-    private final String CONNECTION_STRING = "jdbc:mariadb://localhost:3306/aulas";
+    private final String CONNECTION_STRING = "jdbc:mariadb://localhost:3306/horarioaulas";
     private final Connection mariaConnection;
 
     private MariaDaoManager(String user, String password) throws SQLException {
