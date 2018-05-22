@@ -85,8 +85,7 @@ class MariaDaoAula implements DaoAula{
             
             if(rs.next()) {
                 Integer numeroSillas = rs.getInt(COLUMNAS[1]);
-                aulaSolicitada = new Aula(numeroSillas);
-                aulaSolicitada.setIdAula(idAula);
+                aulaSolicitada = new Aula(idAula, numeroSillas);
             }
                 
         } catch (SQLException ex) {
@@ -106,8 +105,7 @@ class MariaDaoAula implements DaoAula{
             while(rs.next()) {
                 String idAula = rs.getString(COLUMNAS[0]);
                 Integer numeroSillas = rs.getInt(COLUMNAS[1]);
-                Aula aulaListada = new Aula(numeroSillas);
-                aulaListada.setIdAula(idAula);
+                Aula aulaListada = new Aula(idAula, numeroSillas);
                 registros.add(aulaListada);
             }
             

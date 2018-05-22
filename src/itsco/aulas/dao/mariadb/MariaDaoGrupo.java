@@ -83,7 +83,7 @@ class MariaDaoGrupo implements DaoGrupo{
             ResultSet rs = selectStatement.executeQuery();
             if(rs.next()) {
                 Integer numeroAlumnos = rs.getInt(COLUMNAS[1]);
-                grupoSolicitado = new Grupo(numeroAlumnos);
+                grupoSolicitado = new Grupo(idElemento, numeroAlumnos);
                 grupoSolicitado.setIdGrupo(idElemento);
             }
                 
@@ -104,8 +104,7 @@ class MariaDaoGrupo implements DaoGrupo{
             while(rs.next()) {
                 String idGrupo = rs.getString(COLUMNAS[0]);
                 Integer numeroAlumnos = rs.getInt(COLUMNAS[1]);
-                Grupo grupo = new Grupo(numeroAlumnos);
-                grupo.setIdGrupo(idGrupo);                
+                Grupo grupo = new Grupo(idGrupo, numeroAlumnos);                
                 registros.add(grupo);
             }
             

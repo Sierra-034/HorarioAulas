@@ -14,7 +14,8 @@ public class Grupo {
     private String idGrupo;
     private Integer numeroAlumnos;
 
-    public Grupo(Integer numeroAlumnos) {
+    public Grupo(String idGrupo, Integer numeroAlumnos) {
+        this.idGrupo = idGrupo;
         this.numeroAlumnos = numeroAlumnos;
     }
 

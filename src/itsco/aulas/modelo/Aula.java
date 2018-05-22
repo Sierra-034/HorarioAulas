@@ -14,7 +14,8 @@ public class Aula {
     private String idAula;
     private Integer numeroSillas;
     
-    public Aula(int nSillas) {
+    public Aula(String idAula, int nSillas) {
+        this.idAula = idAula;
         numeroSillas = nSillas;
     }
 
