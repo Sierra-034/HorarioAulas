@@ -22,9 +22,9 @@ import java.util.logging.Logger;
  */
 class MariaDaoGrupo implements DaoGrupo{
     
-    private final String[] COLUMNAS = {"ID_GRUPO", "NUMERO_ALUMNOS", "CLAVE_CARRERA"};
-    private final String INSERT = "INSERT INTO grupos (NUMERO_ALUMNOS, CLAVE_CARRERA) VALUES (?, ?)";
-    private final String UPDATE = "UPDATE grupos SET NUMERO_ALUMNOS = ?, CLAVE_CARRERA = ? WHERE ID_GRUPO = ?";
+    private final String[] COLUMNAS = {"ID_GRUPO", "NUMERO_ALUMNOS"};
+    private final String INSERT = "INSERT INTO grupos (NUMERO_ALUMNOS) VALUES (?)";
+    private final String UPDATE = "UPDATE grupos SET NUMERO_ALUMNOS = ? WHERE ID_GRUPO = ?";
     private final String DELETE = "DELETE FROM grupos WHERE ID_GRUPO = ?";
     private final String SELECT = "SELECT * FROM grupos WHERE ID_GRUPO = ?";
     private final String SELECT_ALL = "SELECT * FROM grupos";
@@ -39,11 +39,10 @@ class MariaDaoGrupo implements DaoGrupo{
         try {
             PreparedStatement insertStatement = mariaConnection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             insertStatement.setInt(1, elemento.getNumeroAlumnos());
-            insertStatement.setString(2, elemento.getClaveCarrera());
             insertStatement.executeUpdate();
             ResultSet rs = insertStatement.getGeneratedKeys();
             if(rs.next())
-                elemento.setIdGrupo(rs.getInt(UPDATE));
+                elemento.setIdGrupo(rs.getString(COLUMNAS[0]));
         } catch (SQLException ex) {
             Logger.getLogger(MariaDaoGrupo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -54,8 +53,7 @@ class MariaDaoGrupo implements DaoGrupo{
         try {
             PreparedStatement updateStatement = mariaConnection.prepareStatement(UPDATE);
             updateStatement.setInt(1, elemento.getNumeroAlumnos());
-            updateStatement.setString(2, elemento.getClaveCarrera());
-            updateStatement.setInt(3, elemento.getIdGrupo());
+            updateStatement.setString(2, elemento.getIdGrupo());
             updateStatement.executeUpdate();
             
         } catch (SQLException ex) {
@@ -67,7 +65,7 @@ class MariaDaoGrupo implements DaoGrupo{
     public void delete(Grupo elemento) {
         try {
             PreparedStatement deleteStatement = mariaConnection.prepareStatement(DELETE);
-            deleteStatement.setInt(1, elemento.getIdGrupo());
+            deleteStatement.setString(1, elemento.getIdGrupo());
             deleteStatement.executeUpdate();
             
         } catch (SQLException ex) {
@@ -76,17 +74,16 @@ class MariaDaoGrupo implements DaoGrupo{
     }
 
     @Override
-    public Grupo select(Integer idElemento) {
+    public Grupo select(String idElemento) {
         Grupo grupoSolicitado = null;
         
         try {
             PreparedStatement selectStatement = mariaConnection.prepareCall(SELECT);
-            selectStatement.setInt(1, idElemento);
+            selectStatement.setString(1, idElemento);
             ResultSet rs = selectStatement.executeQuery();
             if(rs.next()) {
                 Integer numeroAlumnos = rs.getInt(COLUMNAS[1]);
-                String claveMateria = rs.getString(COLUMNAS[2]);
-                grupoSolicitado = new Grupo(numeroAlumnos, claveMateria);
+                grupoSolicitado = new Grupo(numeroAlumnos);
                 grupoSolicitado.setIdGrupo(idElemento);
             }
                 
@@ -102,13 +99,12 @@ class MariaDaoGrupo implements DaoGrupo{
         ArrayList<Grupo> registros = new ArrayList<>();
         
         try {
-            PreparedStatement selectAllStatement = mariaConnection.prepareCall(SELECT_ALL);
+            PreparedStatement selectAllStatement = mariaConnection.prepareStatement(SELECT_ALL);
             ResultSet rs = selectAllStatement.executeQuery();
             while(rs.next()) {
-                Integer idGrupo = rs.getInt(COLUMNAS[0]);
+                String idGrupo = rs.getString(COLUMNAS[0]);
                 Integer numeroAlumnos = rs.getInt(COLUMNAS[1]);
-                String claveCarrera = rs.getString(COLUMNAS[2]);
-                Grupo grupo = new Grupo(numeroAlumnos, claveCarrera);
+                Grupo grupo = new Grupo(numeroAlumnos);
                 grupo.setIdGrupo(idGrupo);                
                 registros.add(grupo);
             }

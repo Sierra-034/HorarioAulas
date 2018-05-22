@@ -11,20 +11,18 @@ package itsco.aulas.modelo;
  */
 public class Grupo {
     
-    private Integer idGrupo;
+    private String idGrupo;
     private Integer numeroAlumnos;
-    private String claveCarrera;
 
-    public Grupo(Integer numeroAlumnos, String claveCarrera) {
+    public Grupo(Integer numeroAlumnos) {
         this.numeroAlumnos = numeroAlumnos;
-        this.claveCarrera = claveCarrera;
     }
 
-    public Integer getIdGrupo() {
+    public String getIdGrupo() {
         return idGrupo;
     }
 
-    public void setIdGrupo(Integer idGrupo) {
+    public void setIdGrupo(String idGrupo) {
         this.idGrupo = idGrupo;
     }
 
@@ -36,17 +34,9 @@ public class Grupo {
         this.numeroAlumnos = numeroAlumnos;
     }
 
-    public String getClaveCarrera() {
-        return claveCarrera;
-    }
-
-    public void setClaveCarrera(String claveCarrera) {
-        this.claveCarrera = claveCarrera;
-    }
-
     @Override
     public String toString() {
-        return "Grupo{" + "idGrupo=" + idGrupo + ", numeroAlumnos=" + numeroAlumnos + ", claveCarrera=" + claveCarrera + '}';
+        return "Grupo{" + "idGrupo=" + idGrupo + ", numeroAlumnos=" + numeroAlumnos + '}';
     }
     
 }

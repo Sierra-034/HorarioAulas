@@ -11,6 +11,6 @@ import itsco.aulas.modelo.Grupo;
  *
  * @author Samuel Gomez
  */
-public interface DaoGrupo extends GenericDao<Grupo, Integer>{
+public interface DaoGrupo extends GenericDao<Grupo, String>{
     
 }
