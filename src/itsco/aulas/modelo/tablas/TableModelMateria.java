@@ -15,7 +15,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Samuel Gomez
  */
-class TableModelMateria extends AbstractTableModel {
+public class TableModelMateria extends AbstractTableModel {
     
     private final String[] columnas = {"ID_MATERIA", "NOMBRE"};
     private final DaoMateria daoMateria;
@@ -49,8 +49,8 @@ class TableModelMateria extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Materia materiaSolicitada = registros.get(rowIndex);
         switch(columnIndex) { 
-            case 1: return materiaSolicitada.getIdMateria();
-            case 2: return materiaSolicitada.getNombre();
+            case 0: return materiaSolicitada.getIdMateria();
+            case 1: return materiaSolicitada.getNombre();
             
             default: return "undefined";
         }

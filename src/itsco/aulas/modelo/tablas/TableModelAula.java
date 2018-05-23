@@ -15,7 +15,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Samuel Gomez
  */
-class TableModelAula extends AbstractTableModel {
+public class TableModelAula extends AbstractTableModel {
     
     private final String[] columnas = {"ID_AULA", "NUMERO_SILLAS"};
     private final DaoAula daoAula;
@@ -49,8 +49,8 @@ class TableModelAula extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Aula aulaSolicitada = registros.get(rowIndex);
         switch(columnIndex) {
-            case 1: return aulaSolicitada.getIdAula();
-            case 2: return aulaSolicitada.getNumeroSillas();
+            case 0: return aulaSolicitada.getIdAula();
+            case 1: return aulaSolicitada.getNumeroSillas();
             
             default: return "undefined";
         }

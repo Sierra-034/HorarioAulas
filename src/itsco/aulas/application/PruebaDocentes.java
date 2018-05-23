@@ -23,8 +23,8 @@ public class PruebaDocentes {
      */
     public static void main(String[] args) throws SQLException {
         DaoManager manager = MariaDaoManager.createMariaDaoManager("root", "123");
-        DaoDocente daoAulas = manager.createDaoDocente();
-        List<Docente> registros = daoAulas.selectAll();
+        DaoDocente daoDocente = manager.createDaoDocente();
+        List<Docente> registros = daoDocente.selectAll();
         registros.forEach(System.out::println);
     }
     

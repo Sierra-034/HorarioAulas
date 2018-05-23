@@ -15,7 +15,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Samuel Gomez
  */
-class TableModelDocente extends AbstractTableModel {
+public class TableModelDocente extends AbstractTableModel {
     
     private final String[] columnas = {"ID_DOCENTE", "NOMBRE", "ACADEMIA"};
     private final DaoDocente daoDocente;
