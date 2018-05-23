@@ -17,6 +17,8 @@ import itsco.aulas.dao.mariadb.MariaDaoMateria;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -31,13 +33,17 @@ public class MariaDaoManager implements DaoManager {
     
     private static DaoManager manager;
     private final String CONNECTION_STRING = "jdbc:mariadb://localhost:3306/horarioaulas";
-    private final Connection mariaConnection;
+    private Connection mariaConnection;
 
-    private MariaDaoManager(String user, String password) throws SQLException {
-        mariaConnection = DriverManager.getConnection(CONNECTION_STRING, user, password);
+    private MariaDaoManager(String user, String password) {        
+        try {
+            mariaConnection = DriverManager.getConnection(CONNECTION_STRING, user, password);
+        } catch (SQLException ex) {
+            Logger.getLogger(MariaDaoManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public static DaoManager createMariaDaoManager(String user, String password) throws SQLException {
+    public static DaoManager createMariaDaoManager(String user, String password) {
         if(manager == null)
             manager = new MariaDaoManager(user, password);
         

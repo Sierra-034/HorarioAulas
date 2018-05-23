@@ -5,8 +5,8 @@
  */
 package itsco.aulas.modelo.tablas;
 
-import itsco.aulas.dao.DaoAula;
-import itsco.aulas.modelo.Aula;
+import itsco.aulas.dao.DaoMateria;
+import itsco.aulas.modelo.Materia;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -15,19 +15,19 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Samuel Gomez
  */
-public class TableModelAulas extends AbstractTableModel {
+class TableModelMateria extends AbstractTableModel {
     
-    private final String[] COLUMNAS = {"ID_AULA", "NUMERO_SILLAS"};
-    private final DaoAula daoAula;
-    private List<Aula> registros;
+    private final String[] columnas = {"ID_MATERIA", "NOMBRE"};
+    private final DaoMateria daoMateria;
+    private List<Materia> registros;
 
-    public TableModelAulas(DaoAula daoAula) {
-        this.daoAula = daoAula;
+    public TableModelMateria(DaoMateria daoMateria) {
+        this.daoMateria = daoMateria;
         registros = new ArrayList<>();
     }
     
     public void loadData() {
-        registros = daoAula.selectAll();
+        registros = daoMateria.selectAll();
     }
 
     @Override
@@ -37,24 +37,20 @@ public class TableModelAulas extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return COLUMNAS.length;
+        return columnas.length;
     }
 
     @Override
     public String getColumnName(int column) {
-        switch(column) {
-            case 1: return COLUMNAS[0];
-            case 2: return COLUMNAS[1];
-            default: return "[no]";
-        }
-    }    
+        return columnas[column];
+    }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Aula aulaSolicitada = registros.get(rowIndex);
-        switch(columnIndex) {
-            case 1: return aulaSolicitada.getIdAula();
-            case 2: return aulaSolicitada.getNumeroSillas();
+        Materia materiaSolicitada = registros.get(rowIndex);
+        switch(columnIndex) { 
+            case 1: return materiaSolicitada.getIdMateria();
+            case 2: return materiaSolicitada.getNombre();
             
             default: return "undefined";
         }
