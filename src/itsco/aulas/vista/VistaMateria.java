@@ -7,16 +7,18 @@ package itsco.aulas.vista;
 
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableModelMateria;
+import itsco.aulas.modelo.tablas.TableNameConstant;
 
 /**
  *
  * @author Samuel Gomez
  */
-public class VistaMateria extends javax.swing.JPanel {
+public class VistaMateria extends SuperPanel {
     
     private TableModelMateria modelMateria;
 
     public VistaMateria() {
+        super(TableNameConstant.MATERIAS);
         initCustomComponents();
         initComponents();
     }

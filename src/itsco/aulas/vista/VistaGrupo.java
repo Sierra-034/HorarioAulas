@@ -7,16 +7,18 @@ package itsco.aulas.vista;
 
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableModelGrupo;
+import itsco.aulas.modelo.tablas.TableNameConstant;
 
 /**
  *
  * @author Samuel Gomez
  */
-public class VistaGrupo extends javax.swing.JPanel {
+public class VistaGrupo extends SuperPanel {
     
     private TableModelGrupo modelGrupo;
 
     public VistaGrupo() {
+        super(TableNameConstant.GRUPOS);
         initCustomComponents();
         initComponents();
     }

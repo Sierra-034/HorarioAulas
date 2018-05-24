@@ -9,6 +9,7 @@ import itsco.aulas.dao.DaoManager;
 import itsco.aulas.dao.mariadb.MariaDaoManager;
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableNameConstant;
+import itsco.aulas.vista.SuperPanel;
 import itsco.aulas.vista.VistaAula;
 import itsco.aulas.vista.VistaDocente;
 import itsco.aulas.vista.VistaGrupo;
@@ -24,20 +25,21 @@ import javax.swing.JPanel;
  *
  * @author Samuel Gomez
  */
-public class ApplicationTables extends javax.swing.JFrame implements ItemListener {
+public final class ApplicationTables extends javax.swing.JFrame implements ItemListener {
     
-    private JPanel currentCenterPanel;
-    private final JPanel panelAula;
-    private final JPanel panelDocente;
-    private final JPanel panelGrupo;
-    private final JPanel panelMateria;
-    private DefaultComboBoxModel<String> comboBoxModel;
+    private SuperPanel currentCenterPanel;
+    private final SuperPanel panelAula;
+    private final SuperPanel panelDocente;
+    private final SuperPanel panelGrupo;
+    private final SuperPanel panelMateria;
+    private DefaultComboBoxModel<SuperPanel> comboBoxModel;
 
     public ApplicationTables() {
         panelAula = new VistaAula();
         panelDocente = new VistaDocente();
         panelGrupo = new VistaGrupo();
         panelMateria = new VistaMateria();
+        currentCenterPanel = panelAula;
         
         initCustomComponents();
         initComponents();
@@ -52,6 +54,12 @@ public class ApplicationTables extends javax.swing.JFrame implements ItemListene
         northPanel = new javax.swing.JPanel();
         toolBar = new javax.swing.JToolBar();
         buttonNuevo = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        buttonEditar = new javax.swing.JButton();
+        buttonBorrar = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        buttonGuardar = new javax.swing.JButton();
+        buttonCancelar = new javax.swing.JButton();
         cbTableChooser = new javax.swing.JComboBox<>();
         centerPanel = new javax.swing.JPanel();
 
@@ -65,7 +73,40 @@ public class ApplicationTables extends javax.swing.JFrame implements ItemListene
         buttonNuevo.setFocusable(false);
         buttonNuevo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonNuevo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonNuevoActionPerformed(evt);
+            }
+        });
         toolBar.add(buttonNuevo);
+
+        jSeparator1.setOpaque(true);
+        toolBar.add(jSeparator1);
+
+        buttonEditar.setText("Editar");
+        buttonEditar.setFocusable(false);
+        buttonEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonEditar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolBar.add(buttonEditar);
+
+        buttonBorrar.setText("Borrar");
+        buttonBorrar.setFocusable(false);
+        buttonBorrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonBorrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolBar.add(buttonBorrar);
+        toolBar.add(jSeparator2);
+
+        buttonGuardar.setText("Guardar");
+        buttonGuardar.setFocusable(false);
+        buttonGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonGuardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolBar.add(buttonGuardar);
+
+        buttonCancelar.setText("Cancelar");
+        buttonCancelar.setFocusable(false);
+        buttonCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolBar.add(buttonCancelar);
 
         northPanel.add(toolBar);
 
@@ -81,13 +122,17 @@ public class ApplicationTables extends javax.swing.JFrame implements ItemListene
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void buttonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNuevoActionPerformed
+        System.out.println("Hola mundo " + currentCenterPanel.toString());
+    }//GEN-LAST:event_buttonNuevoActionPerformed
+
     public void initCustomComponents() {  
         /*Modelo para mostrar datos en el ComboBox*/
         comboBoxModel = new DefaultComboBoxModel<>();
-        comboBoxModel.addElement(TableNameConstant.AULAS);
-        comboBoxModel.addElement(TableNameConstant.DOCENTES);
-        comboBoxModel.addElement(TableNameConstant.GRUPOS);
-        comboBoxModel.addElement(TableNameConstant.MATERIAS);
+        comboBoxModel.addElement(panelAula);
+        comboBoxModel.addElement(panelDocente);
+        comboBoxModel.addElement(panelGrupo);
+        comboBoxModel.addElement(panelMateria);
     }
     
     public void addListeners() {
@@ -104,19 +149,10 @@ public class ApplicationTables extends javax.swing.JFrame implements ItemListene
     
     @Override
     public void itemStateChanged(ItemEvent e) {
-        String selectedItem = (String) e.getItem();
+        SuperPanel panelSeleccionado = (SuperPanel) e.getItem();
         CardLayout cl = (CardLayout) (centerPanel.getLayout());
-        cl.show(centerPanel, selectedItem);
-        setCurrentPanelByComboBoxItem(selectedItem);
-    }
-    
-    private void setCurrentPanelByComboBoxItem(String selectedItem) {
-        switch(selectedItem) {
-            case TableNameConstant.AULAS: currentCenterPanel = panelAula;
-            case TableNameConstant.DOCENTES: currentCenterPanel = panelDocente;
-            case TableNameConstant.GRUPOS: currentCenterPanel = panelGrupo;
-            case TableNameConstant.MATERIAS: currentCenterPanel = panelMateria;
-        }
+        cl.show(centerPanel, panelSeleccionado.toString());
+        currentCenterPanel = panelSeleccionado;
     }
     
     private static void createAndShowGUI() {
@@ -134,9 +170,15 @@ public class ApplicationTables extends javax.swing.JFrame implements ItemListene
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonBorrar;
+    private javax.swing.JButton buttonCancelar;
+    private javax.swing.JButton buttonEditar;
+    private javax.swing.JButton buttonGuardar;
     private javax.swing.JButton buttonNuevo;
-    private javax.swing.JComboBox<String> cbTableChooser;
+    private javax.swing.JComboBox<SuperPanel> cbTableChooser;
     private javax.swing.JPanel centerPanel;
+    private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JPanel northPanel;
     private javax.swing.JToolBar toolBar;
     // End of variables declaration//GEN-END:variables
