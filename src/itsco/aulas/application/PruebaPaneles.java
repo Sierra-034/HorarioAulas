@@ -8,6 +8,7 @@ package itsco.aulas.application;
 import itsco.aulas.dao.DaoManager;
 import itsco.aulas.dao.mariadb.MariaDaoManager;
 import itsco.aulas.modelo.tablas.TableModelFactory;
+import itsco.aulas.vista.ToolBar;
 import itsco.aulas.vista.VistaAula;
 import itsco.aulas.vista.VistaDocente;
 import itsco.aulas.vista.VistaGrupo;
@@ -32,18 +33,31 @@ public class PruebaPaneles implements ItemListener {
     private final static String DOCENTES = "Docentes";
     private final static String GRUPOS = "Grupos";
     private final static String MATERIAS = "Materias";
+    
+    private final JPanel panelAula;
+    private final JPanel panelDocente;
+    private final JPanel panelGrupo;
+    private final JPanel panelMateria;
+    private JPanel currentPanel;
 
     public PruebaPaneles(Container panelContainer) {
-        JPanel comboBoxPane = new JPanel();
+        JPanel northPane = new JPanel();
+        
+        /*Creamos un panel que contiene una JToolBar*/
+        JPanel tb = new ToolBar();
+        northPane.add(tb);
+        
+        /*Crea el ComboBox que controlará el CardLayout*/
         String[] bomboBoxItems = {AULAS, DOCENTES, GRUPOS, MATERIAS};
         JComboBox cb = new JComboBox(bomboBoxItems);
         cb.addItemListener(this);
-        comboBoxPane.add(cb);
+        northPane.add(cb);
         
-        VistaAula panelAula = new VistaAula();
-        VistaDocente panelDocente = new VistaDocente();
-        VistaGrupo panelGrupo = new VistaGrupo();
-        VistaMateria panelMateria = new VistaMateria();
+        panelAula = new VistaAula();
+        panelDocente = new VistaDocente();
+        panelGrupo = new VistaGrupo();
+        panelMateria = new VistaMateria();
+        currentPanel = panelAula;
         
         centerPanel = new JPanel(new CardLayout()); 
         centerPanel.add(panelAula, AULAS);
@@ -51,14 +65,27 @@ public class PruebaPaneles implements ItemListener {
         centerPanel.add(panelGrupo, GRUPOS);
         centerPanel.add(panelMateria, MATERIAS);
         
-        panelContainer.add(comboBoxPane, BorderLayout.NORTH);
+        panelContainer.add(northPane, BorderLayout.NORTH);
         panelContainer.add(centerPanel, BorderLayout.CENTER);
     }    
 
     @Override
     public void itemStateChanged(ItemEvent e) {
+        String selectedItem = (String) e.getItem();
         CardLayout cl = (CardLayout) (centerPanel.getLayout());
-        cl.show(centerPanel, (String) e.getItem());
+        cl.show(centerPanel, selectedItem);
+        setCurrentPanelByComboBoxItem(selectedItem);
+    }
+    
+    public void setCurrentPanelByComboBoxItem(String panelName) {
+        switch(panelName) {
+            case AULAS: currentPanel = panelAula;
+            case DOCENTES: currentPanel = panelDocente;
+            case GRUPOS: currentPanel = panelGrupo;
+            case MATERIAS: currentPanel = panelMateria;
+            
+            default: currentPanel = panelAula;
+        }
     }
 
     public static void createAndShowGUI() {
