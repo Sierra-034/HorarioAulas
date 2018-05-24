@@ -8,7 +8,6 @@ package itsco.aulas.application;
 import itsco.aulas.dao.DaoManager;
 import itsco.aulas.dao.mariadb.MariaDaoManager;
 import itsco.aulas.modelo.tablas.TableModelFactory;
-import itsco.aulas.vista.ToolBar;
 import itsco.aulas.vista.VistaAula;
 import itsco.aulas.vista.VistaDocente;
 import itsco.aulas.vista.VistaGrupo;
@@ -42,10 +41,6 @@ public class PruebaPaneles implements ItemListener {
 
     public PruebaPaneles(Container panelContainer) {
         JPanel northPane = new JPanel();
-        
-        /*Creamos un panel que contiene una JToolBar*/
-        JPanel tb = new ToolBar();
-        northPane.add(tb);
         
         /*Crea el ComboBox que controlará el CardLayout*/
         String[] bomboBoxItems = {AULAS, DOCENTES, GRUPOS, MATERIAS};
