@@ -8,6 +8,7 @@ package itsco.aulas.vista;
 import itsco.aulas.modelo.tablas.TableModelDocente;
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableNameConstant;
+import itsco.aulas.vista.frames.ApplicationTables;
 
 /**
  *
@@ -17,7 +18,7 @@ public class VistaDocente extends SuperPanel {
     
     private TableModelDocente modelDocente;
 
-    public VistaDocente() {
+    public VistaDocente(ApplicationTables obs) {
         super(TableNameConstant.DOCENTES);
         initCustomComponents();
         initComponents();

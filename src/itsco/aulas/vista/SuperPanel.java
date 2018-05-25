@@ -5,6 +5,7 @@
  */
 package itsco.aulas.vista;
 
+import itsco.aulas.vista.frames.ApplicationTables;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
@@ -14,7 +15,8 @@ import javax.swing.JTable;
  */
 public abstract class SuperPanel extends JPanel {
     
-    protected String tableName;
+    protected String tableName;    
+    protected ApplicationTables observer;
     protected JTable actualTable;
 
     public SuperPanel() {}

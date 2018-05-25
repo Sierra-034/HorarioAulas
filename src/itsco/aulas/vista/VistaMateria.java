@@ -8,6 +8,7 @@ package itsco.aulas.vista;
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableModelMateria;
 import itsco.aulas.modelo.tablas.TableNameConstant;
+import itsco.aulas.vista.frames.ApplicationTables;
 
 /**
  *
@@ -17,10 +18,11 @@ public class VistaMateria extends SuperPanel {
     
     private TableModelMateria modelMateria;
 
-    public VistaMateria() {
+    public VistaMateria(ApplicationTables obs) {
         super(TableNameConstant.MATERIAS);
         initCustomComponents();
         initComponents();
+        this.observer = obs;
         this.actualTable = tableMateria;
     }
 

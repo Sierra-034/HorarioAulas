@@ -8,6 +8,8 @@ package itsco.aulas.vista;
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableModelGrupo;
 import itsco.aulas.modelo.tablas.TableNameConstant;
+import itsco.aulas.vista.frames.ApplicationTables;
+import javafx.application.Application;
 
 /**
  *
@@ -17,10 +19,11 @@ public class VistaGrupo extends SuperPanel {
     
     private TableModelGrupo modelGrupo;
 
-    public VistaGrupo() {
+    public VistaGrupo(ApplicationTables obs) {
         super(TableNameConstant.GRUPOS);
         initCustomComponents();
         initComponents();
+        this.observer = obs;
         this.actualTable = tableGrupo;
     }
 

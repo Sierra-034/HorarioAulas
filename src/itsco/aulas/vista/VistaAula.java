@@ -20,13 +20,13 @@ import itsco.aulas.vista.frames.ApplicationTables;
 public class VistaAula extends SuperPanel {
 
     private TableModelAula modelAula;
-    private ApplicationTables subject;
+    private Aula singleAula;
     
-    public VistaAula(ApplicationTables s) {
+    public VistaAula(ApplicationTables obs) {
         super(TableNameConstant.AULAS);
-        this.subject = s;
         initCustomComponents();
         initComponents();
+        this.observer = obs;
         this.actualTable = tableAula;
         addListeners();
     }
@@ -39,8 +39,8 @@ public class VistaAula extends SuperPanel {
     private void addListeners() {
         tableAula.getSelectionModel().addListSelectionListener((e) -> {
             boolean validSelection = (tableAula.getSelectedRow() != -1);
-            subject.getButtonEditar().setEnabled(validSelection);
-            subject.getButtonBorrar().setEnabled(validSelection);
+            observer.getButtonEditar().setEnabled(validSelection);
+            observer.getButtonBorrar().setEnabled(validSelection);
         });
     }
     
@@ -96,14 +96,15 @@ public class VistaAula extends SuperPanel {
 
     @Override
     public void actionNuevo() {
+        singleAula = null;
         fieldIdAula.requestFocus();
     }
 
     @Override
     public void actionEditar() {
-        Aula aulaSeleccionada = getElementoSeleccionado();
-        fieldIdAula.setText(aulaSeleccionada.getIdAula());
-        fieldNumeroSillas.setText(aulaSeleccionada.getNumeroSillas().toString());
+        singleAula = getElementoSeleccionado();
+        fieldIdAula.setText(singleAula.getIdAula());
+        fieldNumeroSillas.setText(singleAula.getNumeroSillas().toString());
     }
 
     @Override
