@@ -204,6 +204,12 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
         CardLayout cl = (CardLayout) (centerPanel.getLayout());
         cl.show(centerPanel, panelSeleccionado.toString());
         currentCenterPanel = panelSeleccionado;
+        
+        buttonNuevo.setEnabled(true);
+        buttonEditar.setEnabled(false);
+        buttonBorrar.setEnabled(false);
+        buttonGuardar.setEnabled(false);
+        buttonCancelar.setEnabled(false);
     }
 
     public JButton getButtonBorrar() {
