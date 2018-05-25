@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  *
  * @author Samuel Gomez
  */
-public class SuperPanel extends JPanel {
+public abstract class SuperPanel extends JPanel {
     
     protected String tableName;
 
@@ -20,6 +20,12 @@ public class SuperPanel extends JPanel {
     public SuperPanel(String tableName) {
         this.tableName = tableName;
     }
+    
+    public abstract void actionNuevo();
+    public abstract void actionEditar();
+    public abstract void actionBorrar();
+    public abstract void actionGuardar();
+    public abstract void actionCancelar();
 
     @Override
     public String toString() {

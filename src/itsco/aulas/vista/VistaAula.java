@@ -5,10 +5,13 @@
  */
 package itsco.aulas.vista;
 
+import itsco.aulas.dao.DaoAula;
+import itsco.aulas.dao.mariadb.MariaDaoManager;
 import itsco.aulas.modelo.Aula;
 import itsco.aulas.modelo.tablas.TableModelAula;
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableNameConstant;
+import itsco.aulas.vista.frames.ApplicationTables;
 
 /**
  *
@@ -17,16 +20,33 @@ import itsco.aulas.modelo.tablas.TableNameConstant;
 public class VistaAula extends SuperPanel {
 
     private TableModelAula modelAula;
+    private ApplicationTables subject;
     
-    public VistaAula() {
+    public VistaAula(ApplicationTables s) {
         super(TableNameConstant.AULAS);
+        this.subject = s;
         initCustomComponents();
         initComponents();
+        addListeners();
     }
     
     private void initCustomComponents() {
         modelAula = TableModelFactory.getInstance().getTableModelAula();
         modelAula.loadData();
+    }
+    
+    private void addListeners() {
+        tableAula.getSelectionModel().addListSelectionListener((e) -> {
+            boolean validSelection = (tableAula.getSelectedRow() != -1);
+            subject.getButtonEditar().setEnabled(validSelection);
+            subject.getButtonBorrar().setEnabled(validSelection);
+        });
+    }
+    
+    private Aula getElementoSeleccionado() {
+        String idAula = (String) tableAula.getValueAt(tableAula.getSelectedRow(), 0);
+        DaoAula aula = MariaDaoManager.getInstance().createDaoAula();
+        return aula.select(idAula);
     }
 
     @SuppressWarnings("unchecked")
@@ -72,5 +92,32 @@ public class VistaAula extends SuperPanel {
     private javax.swing.JPanel panelSur;
     private javax.swing.JTable tableAula;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionNuevo() {
+        fieldIdAula.requestFocus();
+    }
+
+    @Override
+    public void actionEditar() {
+        Aula aulaSeleccionada = getElementoSeleccionado();
+        fieldIdAula.setText(aulaSeleccionada.getIdAula());
+        fieldNumeroSillas.setText(aulaSeleccionada.getNumeroSillas().toString());
+    }
+
+    @Override
+    public void actionBorrar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void actionGuardar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void actionCancelar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

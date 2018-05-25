@@ -45,6 +45,10 @@ public class MariaDaoManager implements DaoManager {
         
         return manager;
     }
+    
+    public static DaoManager getInstance() {
+        return manager;
+    }
 
     @Override
     public DaoAula createDaoAula() {

@@ -33,7 +33,7 @@ public class PruebaPaneles implements ItemListener {
     private final static String GRUPOS = "Grupos";
     private final static String MATERIAS = "Materias";
     
-    private final JPanel panelAula;
+//    private final JPanel panelAula;
     private final JPanel panelDocente;
     private final JPanel panelGrupo;
     private final JPanel panelMateria;
@@ -48,14 +48,14 @@ public class PruebaPaneles implements ItemListener {
         cb.addItemListener(this);
         northPane.add(cb);
         
-        panelAula = new VistaAula();
+//        panelAula = new VistaAula();
         panelDocente = new VistaDocente();
         panelGrupo = new VistaGrupo();
         panelMateria = new VistaMateria();
-        currentPanel = panelAula;
+//        currentPanel = panelAula;
         
         centerPanel = new JPanel(new CardLayout()); 
-        centerPanel.add(panelAula, AULAS);
+//        centerPanel.add(panelAula, AULAS);
         centerPanel.add(panelDocente, DOCENTES);
         centerPanel.add(panelGrupo, GRUPOS);
         centerPanel.add(panelMateria, MATERIAS);
@@ -74,12 +74,12 @@ public class PruebaPaneles implements ItemListener {
     
     public void setCurrentPanelByComboBoxItem(String panelName) {
         switch(panelName) {
-            case AULAS: currentPanel = panelAula;
+//            case AULAS: currentPanel = panelAula;
             case DOCENTES: currentPanel = panelDocente;
             case GRUPOS: currentPanel = panelGrupo;
             case MATERIAS: currentPanel = panelMateria;
             
-            default: currentPanel = panelAula;
+//            default: currentPanel = panelAula;
         }
     }
 

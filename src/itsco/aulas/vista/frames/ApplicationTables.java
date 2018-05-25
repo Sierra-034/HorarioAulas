@@ -18,6 +18,7 @@ import java.awt.CardLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -28,7 +29,7 @@ import javax.swing.JPanel;
 public final class ApplicationTables extends javax.swing.JFrame implements ItemListener {
     
     private SuperPanel currentCenterPanel;
-    private final SuperPanel panelAula = new VistaAula();
+    private SuperPanel panelAula;
     private final SuperPanel panelDocente = new VistaDocente();
     private final SuperPanel panelGrupo = new VistaGrupo();
     private final SuperPanel panelMateria = new VistaMateria();
@@ -83,6 +84,11 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
         buttonEditar.setFocusable(false);
         buttonEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonEditar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEditarActionPerformed(evt);
+            }
+        });
         toolBar.add(buttonEditar);
 
         buttonBorrar.setText("Borrar");
@@ -90,6 +96,11 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
         buttonBorrar.setFocusable(false);
         buttonBorrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonBorrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBorrarActionPerformed(evt);
+            }
+        });
         toolBar.add(buttonBorrar);
         toolBar.add(jSeparator2);
 
@@ -131,9 +142,38 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void initCustomComponents() {        
+        /*Setting the observers to this object*/
+        panelAula = new VistaAula(this);
+        currentCenterPanel = panelAula;
+        
+        /*Model to show data into the ComboBox*/
+        comboBoxModel = new DefaultComboBoxModel<>();
+        comboBoxModel.addElement(panelAula);
+        comboBoxModel.addElement(panelDocente);
+        comboBoxModel.addElement(panelGrupo);
+        comboBoxModel.addElement(panelMateria);
+    }
+    
+    public void addPanelsToCenterPanel() {        
+        /*Add elements with to the panel-card*/
+        centerPanel.add(panelAula, TableNameConstant.AULAS);
+        centerPanel.add(panelDocente, TableNameConstant.DOCENTES);
+        centerPanel.add(panelGrupo, TableNameConstant.GRUPOS);
+        centerPanel.add(panelMateria, TableNameConstant.MATERIAS);
+    }    
+    
+    public void addListeners() {
+        cbTableChooser.addItemListener(this);
+    }
+    
     private void buttonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNuevoActionPerformed
+        buttonEditar.setEnabled(false);
+        buttonBorrar.setEnabled(false);
         buttonGuardar.setEnabled(true);
         buttonCancelar.setEnabled(true);
+        
+        currentCenterPanel.actionNuevo();
     }//GEN-LAST:event_buttonNuevoActionPerformed
 
     private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
@@ -145,35 +185,45 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
         buttonCancelarActionPerformed(evt);
     }//GEN-LAST:event_buttonGuardarActionPerformed
 
-    public void initCustomComponents() {  
-        currentCenterPanel = panelAula;
+    private void buttonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditarActionPerformed
+        buttonNuevo.setEnabled(false);
+        buttonBorrar.setEnabled(false);
+        buttonCancelar.setEnabled(true);
+        buttonGuardar.setEnabled(true);
         
-        /*Model to show data into the ComboBox*/
-        comboBoxModel = new DefaultComboBoxModel<>();
-        comboBoxModel.addElement(panelAula);
-        comboBoxModel.addElement(panelDocente);
-        comboBoxModel.addElement(panelGrupo);
-        comboBoxModel.addElement(panelMateria);
-    }
-    
-    public void addListeners() {
-        cbTableChooser.addItemListener(this);
-    }
-    
-    public void addPanelsToCenterPanel() {        
-        /*Add elements with to the panel-card*/
-        centerPanel.add(panelAula, TableNameConstant.AULAS);
-        centerPanel.add(panelDocente, TableNameConstant.DOCENTES);
-        centerPanel.add(panelGrupo, TableNameConstant.GRUPOS);
-        centerPanel.add(panelMateria, TableNameConstant.MATERIAS);
-    }
-    
+        currentCenterPanel.actionEditar();
+    }//GEN-LAST:event_buttonEditarActionPerformed
+
+    private void buttonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBorrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonBorrarActionPerformed
+
     @Override
     public void itemStateChanged(ItemEvent e) {
         SuperPanel panelSeleccionado = (SuperPanel) e.getItem();
         CardLayout cl = (CardLayout) (centerPanel.getLayout());
         cl.show(centerPanel, panelSeleccionado.toString());
         currentCenterPanel = panelSeleccionado;
+    }
+
+    public JButton getButtonBorrar() {
+        return buttonBorrar;
+    }
+
+    public JButton getButtonCancelar() {
+        return buttonCancelar;
+    }
+
+    public JButton getButtonEditar() {
+        return buttonEditar;
+    }
+
+    public JButton getButtonGuardar() {
+        return buttonGuardar;
+    }
+
+    public JButton getButtonNuevo() {
+        return buttonNuevo;
     }
     
     private static void createAndShowGUI() {
