@@ -28,19 +28,14 @@ import javax.swing.JPanel;
 public final class ApplicationTables extends javax.swing.JFrame implements ItemListener {
     
     private SuperPanel currentCenterPanel;
-    private final SuperPanel panelAula;
-    private final SuperPanel panelDocente;
-    private final SuperPanel panelGrupo;
-    private final SuperPanel panelMateria;
+    private final SuperPanel panelAula = new VistaAula();
+    private final SuperPanel panelDocente = new VistaDocente();
+    private final SuperPanel panelGrupo = new VistaGrupo();
+    private final SuperPanel panelMateria = new VistaMateria();
     private DefaultComboBoxModel<SuperPanel> comboBoxModel;
 
-    public ApplicationTables() {
-        panelAula = new VistaAula();
-        panelDocente = new VistaDocente();
-        panelGrupo = new VistaGrupo();
-        panelMateria = new VistaMateria();
-        currentCenterPanel = panelAula;
-        
+    public ApplicationTables() { 
+        super("Horario Aulas");
         initCustomComponents();
         initComponents();
         addPanelsToCenterPanel();
@@ -127,7 +122,9 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
     }//GEN-LAST:event_buttonNuevoActionPerformed
 
     public void initCustomComponents() {  
-        /*Modelo para mostrar datos en el ComboBox*/
+        currentCenterPanel = panelAula;
+        
+        /*Model to show data into the ComboBox*/
         comboBoxModel = new DefaultComboBoxModel<>();
         comboBoxModel.addElement(panelAula);
         comboBoxModel.addElement(panelDocente);
@@ -140,7 +137,7 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
     }
     
     public void addPanelsToCenterPanel() {        
-        /*Añade los elementos al panel con el card*/
+        /*Add elements with to the panel-card*/
         centerPanel.add(panelAula, TableNameConstant.AULAS);
         centerPanel.add(panelDocente, TableNameConstant.DOCENTES);
         centerPanel.add(panelGrupo, TableNameConstant.GRUPOS);
