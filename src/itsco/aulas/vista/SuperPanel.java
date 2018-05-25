@@ -6,6 +6,7 @@
 package itsco.aulas.vista;
 
 import javax.swing.JPanel;
+import javax.swing.JTable;
 
 /**
  *
@@ -14,6 +15,7 @@ import javax.swing.JPanel;
 public abstract class SuperPanel extends JPanel {
     
     protected String tableName;
+    protected JTable actualTable;
 
     public SuperPanel() {}
 
@@ -26,6 +28,10 @@ public abstract class SuperPanel extends JPanel {
     public abstract void actionBorrar();
     public abstract void actionGuardar();
     public abstract void actionCancelar();
+    
+    public void clearTableSelection() {
+        actualTable.clearSelection();
+    }
 
     @Override
     public String toString() {

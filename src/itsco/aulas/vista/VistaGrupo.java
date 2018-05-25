@@ -21,6 +21,7 @@ public class VistaGrupo extends SuperPanel {
         super(TableNameConstant.GRUPOS);
         initCustomComponents();
         initComponents();
+        this.actualTable = tableGrupo;
     }
 
     private void initCustomComponents() {

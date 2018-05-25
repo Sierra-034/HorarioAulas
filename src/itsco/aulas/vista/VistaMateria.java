@@ -21,6 +21,7 @@ public class VistaMateria extends SuperPanel {
         super(TableNameConstant.MATERIAS);
         initCustomComponents();
         initComponents();
+        this.actualTable = tableMateria;
     }
 
     private void initCustomComponents() {

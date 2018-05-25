@@ -200,6 +200,7 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
 
     @Override
     public void itemStateChanged(ItemEvent e) {
+        currentCenterPanel.clearTableSelection();
         SuperPanel panelSeleccionado = (SuperPanel) e.getItem();
         CardLayout cl = (CardLayout) (centerPanel.getLayout());
         cl.show(centerPanel, panelSeleccionado.toString());

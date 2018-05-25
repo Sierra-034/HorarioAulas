@@ -21,6 +21,7 @@ public class VistaDocente extends SuperPanel {
         super(TableNameConstant.DOCENTES);
         initCustomComponents();
         initComponents();
+        this.actualTable = tableDocente;
     }
 
     private void initCustomComponents() {

@@ -27,6 +27,7 @@ public class VistaAula extends SuperPanel {
         this.subject = s;
         initCustomComponents();
         initComponents();
+        this.actualTable = tableAula;
         addListeners();
     }
     
