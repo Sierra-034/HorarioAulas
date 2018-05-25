@@ -25,6 +25,10 @@ public abstract class SuperPanel extends JPanel {
         this.tableName = tableName;
     }
     
+    public void addListeners() { 
+        actualTable.getSelectionModel().addListSelectionListener(MyListSelectionListener.getInstance());
+    }
+    
     public abstract void actionNuevo();
     public abstract void actionEditar();
     public abstract void actionBorrar();
@@ -33,6 +37,10 @@ public abstract class SuperPanel extends JPanel {
     
     public void clearTableSelection() {
         actualTable.clearSelection();
+    }
+
+    public JTable getActualTable() {
+        return actualTable;
     }
 
     @Override

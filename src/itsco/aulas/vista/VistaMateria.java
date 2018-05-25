@@ -18,11 +18,10 @@ public class VistaMateria extends SuperPanel {
     
     private TableModelMateria modelMateria;
 
-    public VistaMateria(ApplicationTables obs) {
+    public VistaMateria() {
         super(TableNameConstant.MATERIAS);
         initCustomComponents();
         initComponents();
-        this.observer = obs;
         this.actualTable = tableMateria;
     }
 

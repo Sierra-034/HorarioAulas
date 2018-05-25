@@ -19,11 +19,10 @@ public class VistaGrupo extends SuperPanel {
     
     private TableModelGrupo modelGrupo;
 
-    public VistaGrupo(ApplicationTables obs) {
+    public VistaGrupo() {
         super(TableNameConstant.GRUPOS);
         initCustomComponents();
         initComponents();
-        this.observer = obs;
         this.actualTable = tableGrupo;
     }
 

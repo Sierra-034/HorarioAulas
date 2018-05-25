@@ -18,7 +18,7 @@ public class VistaDocente extends SuperPanel {
     
     private TableModelDocente modelDocente;
 
-    public VistaDocente(ApplicationTables obs) {
+    public VistaDocente() {
         super(TableNameConstant.DOCENTES);
         initCustomComponents();
         initComponents();

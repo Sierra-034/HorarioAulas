@@ -22,26 +22,16 @@ public class VistaAula extends SuperPanel {
     private TableModelAula modelAula;
     private Aula singleAula;
     
-    public VistaAula(ApplicationTables obs) {
+    public VistaAula() {
         super(TableNameConstant.AULAS);
         initCustomComponents();
         initComponents();
-        this.observer = obs;
         this.actualTable = tableAula;
-        addListeners();
     }
     
     private void initCustomComponents() {
         modelAula = TableModelFactory.getInstance().getTableModelAula();
         modelAula.loadData();
-    }
-    
-    private void addListeners() {
-        tableAula.getSelectionModel().addListSelectionListener((e) -> {
-            boolean validSelection = (tableAula.getSelectedRow() != -1);
-            observer.getButtonEditar().setEnabled(validSelection);
-            observer.getButtonBorrar().setEnabled(validSelection);
-        });
     }
     
     private Aula getElementoSeleccionado() {

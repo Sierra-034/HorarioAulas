@@ -9,6 +9,7 @@ import itsco.aulas.dao.DaoManager;
 import itsco.aulas.dao.mariadb.MariaDaoManager;
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableNameConstant;
+import itsco.aulas.vista.MyListSelectionListener;
 import itsco.aulas.vista.SuperPanel;
 import itsco.aulas.vista.VistaAula;
 import itsco.aulas.vista.VistaDocente;
@@ -29,7 +30,7 @@ import javax.swing.JPanel;
 public final class ApplicationTables extends javax.swing.JFrame implements ItemListener {
     
     private SuperPanel currentCenterPanel;
-    private SuperPanel panelAula;
+    private final SuperPanel panelAula = new VistaAula();
     private final SuperPanel panelDocente = new VistaDocente();
     private final SuperPanel panelGrupo = new VistaGrupo();
     private final SuperPanel panelMateria = new VistaMateria();
@@ -143,8 +144,6 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
     }// </editor-fold>//GEN-END:initComponents
 
     public void initCustomComponents() {        
-        /*Setting the observers to this object*/
-        panelAula = new VistaAula(this);
         currentCenterPanel = panelAula;
         
         /*Model to show data into the ComboBox*/
@@ -165,6 +164,11 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
     
     public void addListeners() {
         cbTableChooser.addItemListener(this);
+        MyListSelectionListener.createListSelectionListener(this);
+        panelAula.addListeners();
+        panelDocente.addListeners();
+        panelGrupo.addListeners();
+        panelMateria.addListeners();
     }
     
     private void buttonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNuevoActionPerformed
@@ -231,6 +235,10 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
 
     public JButton getButtonNuevo() {
         return buttonNuevo;
+    }
+
+    public SuperPanel getCurrentCenterPanel() {
+        return currentCenterPanel;
     }
     
     private static void createAndShowGUI() {
