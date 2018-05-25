@@ -79,12 +79,14 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
         toolBar.add(jSeparator1);
 
         buttonEditar.setText("Editar");
+        buttonEditar.setEnabled(false);
         buttonEditar.setFocusable(false);
         buttonEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonEditar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         toolBar.add(buttonEditar);
 
         buttonBorrar.setText("Borrar");
+        buttonBorrar.setEnabled(false);
         buttonBorrar.setFocusable(false);
         buttonBorrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonBorrar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -92,15 +94,27 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
         toolBar.add(jSeparator2);
 
         buttonGuardar.setText("Guardar");
+        buttonGuardar.setEnabled(false);
         buttonGuardar.setFocusable(false);
         buttonGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonGuardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGuardarActionPerformed(evt);
+            }
+        });
         toolBar.add(buttonGuardar);
 
         buttonCancelar.setText("Cancelar");
+        buttonCancelar.setEnabled(false);
         buttonCancelar.setFocusable(false);
         buttonCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         buttonCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCancelarActionPerformed(evt);
+            }
+        });
         toolBar.add(buttonCancelar);
 
         northPanel.add(toolBar);
@@ -118,8 +132,18 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNuevoActionPerformed
-        System.out.println("Hola mundo " + currentCenterPanel.toString());
+        buttonGuardar.setEnabled(true);
+        buttonCancelar.setEnabled(true);
     }//GEN-LAST:event_buttonNuevoActionPerformed
+
+    private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
+        buttonCancelar.setEnabled(false);
+        buttonGuardar.setEnabled(false);
+    }//GEN-LAST:event_buttonCancelarActionPerformed
+
+    private void buttonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuardarActionPerformed
+        buttonCancelarActionPerformed(evt);
+    }//GEN-LAST:event_buttonGuardarActionPerformed
 
     public void initCustomComponents() {  
         currentCenterPanel = panelAula;

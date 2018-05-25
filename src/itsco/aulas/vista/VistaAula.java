@@ -5,6 +5,7 @@
  */
 package itsco.aulas.vista;
 
+import itsco.aulas.modelo.Aula;
 import itsco.aulas.modelo.tablas.TableModelAula;
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableNameConstant;
