@@ -109,12 +109,9 @@ public class VistaAula extends SuperPanel {
             Aula aulaSeleccionada = getElementoSeleccionado();
             manager.delete(aulaSeleccionada);
             modelAula.loadData();
-            modelAula.fireTableDataChanged();
+            modelAula.fireTableDataChanged();        
+            clearTableSelection();
         }
-        
-        modelAula.loadData();
-        modelAula.fireTableDataChanged();
-        tableAula.clearSelection();
     }
 
     @Override
@@ -142,7 +139,7 @@ public class VistaAula extends SuperPanel {
         fieldIdAula.setText("");
         fieldNumeroSillas.setText("");
         singleAula = null; 
-        tableAula.clearSelection();
+        clearTableSelection();
     }
     
     public boolean elementoValido() {

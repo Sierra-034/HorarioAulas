@@ -5,10 +5,14 @@
  */
 package itsco.aulas.vista;
 
+import itsco.aulas.dao.DaoDocente;
+import itsco.aulas.dao.mariadb.MariaDaoManager;
+import itsco.aulas.modelo.Docente;
 import itsco.aulas.modelo.tablas.TableModelDocente;
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableNameConstant;
 import itsco.aulas.vista.frames.ApplicationTables;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,7 +20,9 @@ import itsco.aulas.vista.frames.ApplicationTables;
  */
 public class VistaDocente extends SuperPanel {
     
+    private final DaoDocente manager = MariaDaoManager.getInstance().createDaoDocente();
     private TableModelDocente modelDocente;
+    private Docente singleDocente;
 
     public VistaDocente() {
         super(TableNameConstant.DOCENTES);
@@ -81,29 +87,78 @@ public class VistaDocente extends SuperPanel {
     private javax.swing.JTable tableDocente;
     // End of variables declaration//GEN-END:variables
 
+    public Docente getElementoSeleccionado() {
+        String idDocente = (String) tableDocente.getValueAt(tableDocente.getSelectedRow(), 0);
+        return manager.select(idDocente);
+    }
+    
     @Override
     public void actionNuevo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        singleDocente = null;
+        fieldIdDocente.requestFocus();
     }
 
     @Override
     public void actionEditar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        singleDocente = getElementoSeleccionado();
+        fieldIdDocente.setText(singleDocente.getIdDocente());
+        fieldNombre.setText(singleDocente.getNombre());
+        fieldAcademia.setText(singleDocente.getAcademia());
     }
 
     @Override
     public void actionBorrar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String title = "Confirma borrado";
+        String message = "Seguro que quieres borrar este Docente?";
+        int optionPaneResult = JOptionPane.showConfirmDialog(this, message, title, 
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if(optionPaneResult == JOptionPane.YES_OPTION) {
+            Docente docenteSeleccionado = getElementoSeleccionado();
+            manager.delete(docenteSeleccionado);
+            modelDocente.loadData();
+            modelDocente.fireTableDataChanged();
+            clearTableSelection();
+        }
     }
 
     @Override
     public void actionGuardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(elementoValido()) {
+            //Modifica elemento existente
+            singleDocente.setIdDocente(fieldIdDocente.getText());
+            singleDocente.setNombre(fieldNombre.getText());
+            singleDocente.setAcademia(fieldAcademia.getText());
+            manager.update(singleDocente);
+        }
+        else if(singleDocente == null) {
+            //Guarda nuevo elemento
+            String idDocente = fieldIdDocente.getText();
+            String nombre = fieldNombre.getText();
+            String academia = fieldAcademia.getText();
+            Docente docenteNuevo = new Docente(idDocente, nombre, academia);
+            manager.insert(docenteNuevo);
+        }
+        
+        modelDocente.loadData();
+        modelDocente.fireTableDataChanged();;
     }
 
     @Override
     public void actionCancelar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        fieldIdDocente.setText("");
+        fieldNombre.setText("");
+        fieldAcademia.setText("");
+        singleDocente = null;
+        clearTableSelection();
+    }
+    
+    public boolean elementoValido() {
+        boolean elemento = singleDocente != null; 
+        boolean camposValidos = (fieldIdDocente.getText() != "") && 
+                (fieldNombre.getText() != "") && 
+                (fieldAcademia.getText() != "");
+        return elemento && camposValidos;
     }
 
 }
