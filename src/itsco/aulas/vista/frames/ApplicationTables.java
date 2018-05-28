@@ -172,8 +172,8 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
     }
     
     private void buttonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNuevoActionPerformed
-        buttonEditar.setEnabled(false);
-        buttonBorrar.setEnabled(false);
+        setAllEnabledFalse();
+        buttonNuevo.setEnabled(true);
         buttonGuardar.setEnabled(true);
         buttonCancelar.setEnabled(true);
         
@@ -181,25 +181,29 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
     }//GEN-LAST:event_buttonNuevoActionPerformed
 
     private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
-        buttonCancelar.setEnabled(false);
-        buttonGuardar.setEnabled(false);
+        setAllEnabledFalse();
+        buttonNuevo.setEnabled(true);
+        currentCenterPanel.actionCancelar();
     }//GEN-LAST:event_buttonCancelarActionPerformed
 
     private void buttonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuardarActionPerformed
-        buttonCancelarActionPerformed(evt);
+        currentCenterPanel.actionGuardar();
+        buttonCancelarActionPerformed(evt); //Se desactivan los controles como en el boton cancelar
     }//GEN-LAST:event_buttonGuardarActionPerformed
 
     private void buttonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditarActionPerformed
-        buttonNuevo.setEnabled(false);
-        buttonBorrar.setEnabled(false);
+        setAllEnabledFalse();
         buttonCancelar.setEnabled(true);
-        buttonGuardar.setEnabled(true);
+        buttonGuardar.setEnabled(true);    
         
         currentCenterPanel.actionEditar();
     }//GEN-LAST:event_buttonEditarActionPerformed
 
     private void buttonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBorrarActionPerformed
-        // TODO add your handling code here:
+        setAllEnabledFalse();
+        buttonNuevo.setEnabled(true);
+        
+        currentCenterPanel.actionBorrar();
     }//GEN-LAST:event_buttonBorrarActionPerformed
 
     @Override
@@ -210,7 +214,12 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
         cl.show(centerPanel, panelSeleccionado.toString());
         currentCenterPanel = panelSeleccionado;
         
+        setAllEnabledFalse();
         buttonNuevo.setEnabled(true);
+    }
+    
+    public void setAllEnabledFalse() {
+        buttonNuevo.setEnabled(false);
         buttonEditar.setEnabled(false);
         buttonBorrar.setEnabled(false);
         buttonGuardar.setEnabled(false);

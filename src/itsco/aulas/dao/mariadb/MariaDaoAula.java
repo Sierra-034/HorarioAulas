@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 class MariaDaoAula implements DaoAula{
     
     private final String[] COLUMNAS = {"ID_AULA", "NUMERO_SILLAS"};
-    private final String INSERT = "INSERT INTO aulas (NUMERO_SILLAS) VALUES (?)";
+    private final String INSERT = "INSERT INTO aulas (ID_AULA, NUMERO_SILLAS) VALUES (?, ?)";
     private final String UPDATE = "UPDATE aulas SET NUMERO_SILLAS = ? WHERE ID_AULA = ?";
     private final String DELETE = "DELETE FROM aulas WHERE ID_AULA = ?";
     private final String SELECT = "SELECT * FROM aulas WHERE ID_AULA = ?";
@@ -38,7 +38,8 @@ class MariaDaoAula implements DaoAula{
     public void insert(Aula aula) {
         try {
             PreparedStatement insertStatement = mariaConnection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-            insertStatement.setInt(1, aula.getNumeroSillas());
+            insertStatement.setString(1, aula.getIdAula());
+            insertStatement.setInt(2, aula.getNumeroSillas());
             insertStatement.executeUpdate();
             ResultSet generatedKeys = insertStatement.getGeneratedKeys();
             if(generatedKeys.next())

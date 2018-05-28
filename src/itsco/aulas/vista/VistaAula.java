@@ -12,6 +12,7 @@ import itsco.aulas.modelo.tablas.TableModelAula;
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableNameConstant;
 import itsco.aulas.vista.frames.ApplicationTables;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,6 +20,7 @@ import itsco.aulas.vista.frames.ApplicationTables;
  */
 public class VistaAula extends SuperPanel {
 
+    private final DaoAula manager = MariaDaoManager.getInstance().createDaoAula();
     private TableModelAula modelAula;
     private Aula singleAula;
     
@@ -36,8 +38,7 @@ public class VistaAula extends SuperPanel {
     
     private Aula getElementoSeleccionado() {
         String idAula = (String) tableAula.getValueAt(tableAula.getSelectedRow(), 0);
-        DaoAula aula = MariaDaoManager.getInstance().createDaoAula();
-        return aula.select(idAula);
+        return manager.select(idAula);
     }
 
     @SuppressWarnings("unchecked")
@@ -99,17 +100,55 @@ public class VistaAula extends SuperPanel {
 
     @Override
     public void actionBorrar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String title = "Confirma borrado";
+        String message = "Seguro que quieres borrar esta Aula?";
+        int optionPaneResult = JOptionPane.showConfirmDialog(this, message, title,
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if(optionPaneResult == JOptionPane.YES_OPTION) {
+            Aula aulaSeleccionada = getElementoSeleccionado();
+            manager.delete(aulaSeleccionada);
+            modelAula.loadData();
+            modelAula.fireTableDataChanged();
+        }
+        
+        modelAula.loadData();
+        modelAula.fireTableDataChanged();
+        tableAula.clearSelection();
     }
 
     @Override
     public void actionGuardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(elementoValido()) {
+            //Modificar elemento existente
+            singleAula.setIdAula(fieldIdAula.getText());
+            singleAula.setNumeroSillas(Integer.parseInt(fieldNumeroSillas.getText()));
+            manager.update(singleAula);
+        }
+        else if(singleAula == null) {
+            //Guardar nuevo elemento
+            String idAula = fieldIdAula.getText();
+            int numeroSillas = Integer.parseInt(fieldNumeroSillas.getText());
+            Aula aulaNueva = new Aula(idAula, numeroSillas);
+            manager.insert(aulaNueva);
+        }
+        
+        modelAula.loadData();
+        modelAula.fireTableDataChanged();
     }
 
     @Override
     public void actionCancelar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        fieldIdAula.setText("");
+        fieldNumeroSillas.setText("");
+        singleAula = null; 
+        tableAula.clearSelection();
+    }
+    
+    public boolean elementoValido() {
+        boolean elemento = singleAula != null; 
+        boolean camposValidos = (fieldIdAula.getText() != "") && (fieldNumeroSillas.getText() != "");
+        return elemento && camposValidos;
     }
 
 }

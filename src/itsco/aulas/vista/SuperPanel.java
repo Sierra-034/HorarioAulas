@@ -26,7 +26,8 @@ public abstract class SuperPanel extends JPanel {
     }
     
     public void addListeners() { 
-        actualTable.getSelectionModel().addListSelectionListener(MyListSelectionListener.getInstance());
+        actualTable.getSelectionModel().
+                addListSelectionListener(MyListSelectionListener.getInstance());
     }
     
     public abstract void actionNuevo();

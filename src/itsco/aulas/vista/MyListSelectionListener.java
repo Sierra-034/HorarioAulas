@@ -29,6 +29,7 @@ public class MyListSelectionListener implements ListSelectionListener {
         boolean validSelection = (table.getSelectedRow() != -1);
         mainApplicaton.getButtonEditar().setEnabled(validSelection);
         mainApplicaton.getButtonBorrar().setEnabled(validSelection);
+        mainApplicaton.getButtonCancelar().setEnabled(validSelection);
     }
     
     public static void createListSelectionListener(ApplicationTables mainApplication) {
