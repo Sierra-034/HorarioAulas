@@ -5,10 +5,14 @@
  */
 package itsco.aulas.vista;
 
+import itsco.aulas.dao.DaoMateria;
+import itsco.aulas.dao.mariadb.MariaDaoManager;
+import itsco.aulas.modelo.Materia;
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableModelMateria;
 import itsco.aulas.modelo.tablas.TableNameConstant;
 import itsco.aulas.vista.frames.ApplicationTables;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,7 +20,9 @@ import itsco.aulas.vista.frames.ApplicationTables;
  */
 public class VistaMateria extends SuperPanel {
     
+    private final DaoMateria manager = MariaDaoManager.getInstance().createDaoMateria();
     private TableModelMateria modelMateria;
+    private Materia singleMateria;
 
     public VistaMateria() {
         super(TableNameConstant.MATERIAS);
@@ -28,6 +34,11 @@ public class VistaMateria extends SuperPanel {
     private void initCustomComponents() {
         modelMateria = TableModelFactory.getInstance().getTableModelMateria();
         modelMateria.loadData();
+    }
+    
+    private Materia getElementoSeleccionado() {
+        String idAula = (String) tableMateria.getValueAt(tableMateria.getSelectedRow(), 0);
+        return manager.select(idAula);
     }
     
     @SuppressWarnings("unchecked")
@@ -75,27 +86,65 @@ public class VistaMateria extends SuperPanel {
 
     @Override
     public void actionNuevo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        singleMateria = null;
+        fieldIdMateria.requestFocus();
     }
 
     @Override
     public void actionEditar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        singleMateria = getElementoSeleccionado();
+        fieldIdMateria.setText(singleMateria.getIdMateria());
+        fieldNombre.setText(singleMateria.getNombre());
     }
 
     @Override
     public void actionBorrar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String title = "Confirma borrado";
+        String message = "Seguro que quieres borrar esta Aula?";
+        int optionPaneResult = JOptionPane.showConfirmDialog(this, message, title,
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if(optionPaneResult == JOptionPane.YES_OPTION) {
+            Materia materiaSeleccionada = getElementoSeleccionado();
+            manager.delete(materiaSeleccionada);
+            modelMateria.loadData();
+            modelMateria.fireTableDataChanged();        
+            clearTableSelection();
+        }
     }
 
     @Override
     public void actionGuardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(elementoValido()) {
+            //Modificar elemento existente
+            singleMateria.setIdMateria(fieldIdMateria.getText());
+            singleMateria.setNombre(fieldNombre.getText());
+            manager.update(singleMateria);
+        }
+        else if(singleMateria == null) {
+            //Guardar nuevo elemento
+            String idMateria = fieldIdMateria.getText();
+            String nombre = fieldNombre.getText();
+            Materia materiaNueva = new Materia(idMateria, nombre);
+            manager.insert(materiaNueva);
+        }
+        
+        modelMateria.loadData();
+        modelMateria.fireTableDataChanged();
     }
 
     @Override
     public void actionCancelar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        fieldIdMateria.setText("");
+        fieldNombre.setText("");
+        singleMateria = null; 
+        clearTableSelection();
+    }
+
+    private boolean elementoValido() {
+        boolean elemento = singleMateria != null; 
+        boolean camposValidos = (fieldIdMateria.getText() != "") && (fieldNombre.getText() != "");
+        return elemento && camposValidos;
     }
 
 }

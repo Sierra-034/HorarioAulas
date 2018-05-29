@@ -38,7 +38,8 @@ class MariaDaoMateria implements DaoMateria{
     public void insert(Materia elemento) {
         try {
             PreparedStatement insertStatement = mariaConnection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-            insertStatement.setString(1, elemento.getNombre());
+            insertStatement.setString(1, elemento.getIdMateria());
+            insertStatement.setString(2, elemento.getNombre());
             insertStatement.executeUpdate();
             ResultSet rs = insertStatement.getGeneratedKeys();
             if(rs.next())
@@ -54,7 +55,7 @@ class MariaDaoMateria implements DaoMateria{
         try {
             PreparedStatement updateStatement = mariaConnection.prepareStatement(UPDATE);
             updateStatement.setString(1, elemento.getNombre());
-            updateStatement.setString(3, elemento.getIdMateria());
+            updateStatement.setString(2, elemento.getIdMateria());
             updateStatement.executeUpdate();
             
         } catch (SQLException ex) {
