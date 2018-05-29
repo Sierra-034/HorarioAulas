@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,7 +24,7 @@ import java.util.logging.Logger;
 class MariaDaoGrupo implements DaoGrupo{
     
     private final String[] COLUMNAS = {"ID_GRUPO", "NUMERO_ALUMNOS"};
-    private final String INSERT = "INSERT INTO grupos (NUMERO_ALUMNOS) VALUES (?)";
+    private final String INSERT = "INSERT INTO grupos (ID_GRUPO, NUMERO_ALUMNOS) VALUES (?, ?)";
     private final String UPDATE = "UPDATE grupos SET NUMERO_ALUMNOS = ? WHERE ID_GRUPO = ?";
     private final String DELETE = "DELETE FROM grupos WHERE ID_GRUPO = ?";
     private final String SELECT = "SELECT * FROM grupos WHERE ID_GRUPO = ?";
@@ -38,7 +39,8 @@ class MariaDaoGrupo implements DaoGrupo{
     public void insert(Grupo elemento) {
         try {
             PreparedStatement insertStatement = mariaConnection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-            insertStatement.setInt(1, elemento.getNumeroAlumnos());
+            insertStatement.setString(1, elemento.getIdGrupo());
+            insertStatement.setInt(2, elemento.getNumeroAlumnos());
             insertStatement.executeUpdate();
             ResultSet rs = insertStatement.getGeneratedKeys();
             if(rs.next())
@@ -78,7 +80,7 @@ class MariaDaoGrupo implements DaoGrupo{
         Grupo grupoSolicitado = null;
         
         try {
-            PreparedStatement selectStatement = mariaConnection.prepareCall(SELECT);
+            PreparedStatement selectStatement = mariaConnection.prepareStatement(SELECT);
             selectStatement.setString(1, idElemento);
             ResultSet rs = selectStatement.executeQuery();
             if(rs.next()) {

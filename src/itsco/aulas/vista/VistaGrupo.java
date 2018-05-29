@@ -5,11 +5,13 @@
  */
 package itsco.aulas.vista;
 
+import itsco.aulas.dao.DaoGrupo;
+import itsco.aulas.dao.mariadb.MariaDaoManager;
+import itsco.aulas.modelo.Grupo;
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableModelGrupo;
 import itsco.aulas.modelo.tablas.TableNameConstant;
-import itsco.aulas.vista.frames.ApplicationTables;
-import javafx.application.Application;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,7 +19,9 @@ import javafx.application.Application;
  */
 public class VistaGrupo extends SuperPanel {
     
+    private final DaoGrupo manager = MariaDaoManager.getInstance().createDaoGrupo();
     private TableModelGrupo modelGrupo;
+    private Grupo singleGrupo;
 
     public VistaGrupo() {
         super(TableNameConstant.GRUPOS);
@@ -29,6 +33,11 @@ public class VistaGrupo extends SuperPanel {
     private void initCustomComponents() {
         modelGrupo = TableModelFactory.getInstance().getTableModelGrupo();
         modelGrupo.loadData();
+    }
+    
+    private Grupo getElementoSeleccionado() {
+        String idGrupo = (String) tableGrupo.getValueAt(tableGrupo.getSelectedRow(), 0);
+        return manager.select(idGrupo);
     }
     
     @SuppressWarnings("unchecked")
@@ -76,27 +85,65 @@ public class VistaGrupo extends SuperPanel {
 
     @Override
     public void actionNuevo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        singleGrupo = null;
+        fieldIdGrupo.requestFocus();
     }
 
     @Override
     public void actionEditar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        singleGrupo = getElementoSeleccionado();
+        fieldIdGrupo.setText(singleGrupo.getIdGrupo());
+        fieldNumeroAlumnos.setText(singleGrupo.getNumeroAlumnos().toString());
     }
 
     @Override
     public void actionBorrar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String title = "Confirma borrado";
+        String message = "Seguro que quieres borrar este Grupo?";
+        int optionPaneResult = JOptionPane.showConfirmDialog(this, message, title,
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if(optionPaneResult == JOptionPane.YES_OPTION) {
+            Grupo grupoSeleccionado = getElementoSeleccionado();
+            manager.delete(grupoSeleccionado);
+            modelGrupo.loadData();
+            modelGrupo.fireTableDataChanged();        
+            clearTableSelection();
+        }
     }
 
     @Override
     public void actionGuardar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(elementoValido()) {
+            //Modificar elemento existente
+            singleGrupo.setIdGrupo(fieldIdGrupo.getText());
+            singleGrupo.setNumeroAlumnos(Integer.parseInt(fieldNumeroAlumnos.getText()));
+            manager.update(singleGrupo);
+        }
+        else if(singleGrupo == null) {
+            //Guardar nuevo elemento
+            String idGrupo = fieldIdGrupo.getText();
+            int numeroAlumnos = Integer.parseInt(fieldNumeroAlumnos.getText());
+            Grupo grupoNuevo = new Grupo(idGrupo, numeroAlumnos);
+            manager.insert(grupoNuevo);
+        }
+        
+        modelGrupo.loadData();
+        modelGrupo.fireTableDataChanged();        
     }
 
     @Override
     public void actionCancelar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        fieldIdGrupo.setText("");
+        fieldNumeroAlumnos.setText("");
+        singleGrupo = null; 
+        clearTableSelection();
+    }
+    
+    public boolean elementoValido() {
+        boolean elemento = singleGrupo != null; 
+        boolean camposValidos = (fieldIdGrupo.getText() != "") && (fieldNumeroAlumnos.getText() != "");
+        return elemento && camposValidos;
     }
 
 }
