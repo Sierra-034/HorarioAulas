@@ -66,6 +66,7 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
 
         toolBar.setRollover(true);
 
+        buttonNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/anadir.png"))); // NOI18N
         buttonNuevo.setText("Nuevo");
         buttonNuevo.setFocusable(false);
         buttonNuevo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -80,6 +81,7 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
         jSeparator1.setOpaque(true);
         toolBar.add(jSeparator1);
 
+        buttonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/editar.png"))); // NOI18N
         buttonEditar.setText("Editar");
         buttonEditar.setEnabled(false);
         buttonEditar.setFocusable(false);
@@ -92,6 +94,7 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
         });
         toolBar.add(buttonEditar);
 
+        buttonBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/menos.png"))); // NOI18N
         buttonBorrar.setText("Borrar");
         buttonBorrar.setEnabled(false);
         buttonBorrar.setFocusable(false);
@@ -105,6 +108,7 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
         toolBar.add(buttonBorrar);
         toolBar.add(jSeparator2);
 
+        buttonGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/guardar.png"))); // NOI18N
         buttonGuardar.setText("Guardar");
         buttonGuardar.setEnabled(false);
         buttonGuardar.setFocusable(false);
@@ -117,6 +121,7 @@ public final class ApplicationTables extends javax.swing.JFrame implements ItemL
         });
         toolBar.add(buttonGuardar);
 
+        buttonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error.png"))); // NOI18N
         buttonCancelar.setText("Cancelar");
         buttonCancelar.setEnabled(false);
         buttonCancelar.setFocusable(false);
