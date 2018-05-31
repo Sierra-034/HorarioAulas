@@ -12,10 +12,12 @@ package itsco.aulas.modelo;
 public class Aula {
     
     private String idAula;
+    private String edificio;
     private Integer numeroSillas;
     
-    public Aula(String idAula, int nSillas) {
+    public Aula(String idAula, String edificio, int nSillas) {
         this.idAula = idAula;
+        this.edificio = edificio;
         numeroSillas = nSillas;
     }
 
@@ -25,6 +27,14 @@ public class Aula {
 
     public void setIdAula(String idAula) {
         this.idAula = idAula;
+    }
+
+    public String getEdificio() {
+        return edificio;
+    }
+
+    public void setEdificio(String edificio) {
+        this.edificio = edificio;
     }
 
     public Integer getNumeroSillas() {

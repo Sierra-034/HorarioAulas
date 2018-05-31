@@ -50,6 +50,8 @@ public class VistaAula extends SuperPanel {
         panelSur = new javax.swing.JPanel();
         labelIdAula = new javax.swing.JLabel();
         fieldIdAula = new javax.swing.JTextField();
+        labelEdificio = new javax.swing.JLabel();
+        fieldEdificio = new javax.swing.JTextField();
         labelNumeroSillas = new javax.swing.JLabel();
         fieldNumeroSillas = new javax.swing.JTextField();
 
@@ -60,12 +62,16 @@ public class VistaAula extends SuperPanel {
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        panelSur.setLayout(new java.awt.GridLayout(2, 2, 5, 0));
+        panelSur.setLayout(new java.awt.GridLayout(3, 2, 5, 0));
 
         labelIdAula.setText("ID AULA");
         labelIdAula.setName(""); // NOI18N
         panelSur.add(labelIdAula);
         panelSur.add(fieldIdAula);
+
+        labelEdificio.setText("EDIFICIO");
+        panelSur.add(labelEdificio);
+        panelSur.add(fieldEdificio);
 
         labelNumeroSillas.setText("NUMERO SILLAS");
         panelSur.add(labelNumeroSillas);
@@ -76,9 +82,11 @@ public class VistaAula extends SuperPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField fieldEdificio;
     private javax.swing.JTextField fieldIdAula;
     private javax.swing.JTextField fieldNumeroSillas;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelEdificio;
     private javax.swing.JLabel labelIdAula;
     private javax.swing.JLabel labelNumeroSillas;
     private javax.swing.JPanel panelSur;
@@ -95,6 +103,7 @@ public class VistaAula extends SuperPanel {
     public void actionEditar() {
         singleAula = getElementoSeleccionado();
         fieldIdAula.setText(singleAula.getIdAula());
+        fieldEdificio.setText(singleAula.getEdificio());
         fieldNumeroSillas.setText(singleAula.getNumeroSillas().toString());
     }
 
@@ -119,14 +128,16 @@ public class VistaAula extends SuperPanel {
         if(elementoValido()) {
             //Modificar elemento existente
             singleAula.setIdAula(fieldIdAula.getText());
+            singleAula.setEdificio(fieldEdificio.getText());
             singleAula.setNumeroSillas(Integer.parseInt(fieldNumeroSillas.getText()));
             manager.update(singleAula);
         }
         else if(singleAula == null) {
             //Guardar nuevo elemento
             String idAula = fieldIdAula.getText();
+            String edificio = fieldEdificio.getText();
             int numeroSillas = Integer.parseInt(fieldNumeroSillas.getText());
-            Aula aulaNueva = new Aula(idAula, numeroSillas);
+            Aula aulaNueva = new Aula(idAula, edificio, numeroSillas);
             manager.insert(aulaNueva);
         }
         
@@ -137,6 +148,7 @@ public class VistaAula extends SuperPanel {
     @Override
     public void actionCancelar() {
         fieldIdAula.setText("");
+        fieldEdificio.setText("");
         fieldNumeroSillas.setText("");
         singleAula = null; 
         clearTableSelection();
@@ -144,7 +156,9 @@ public class VistaAula extends SuperPanel {
     
     public boolean elementoValido() {
         boolean elemento = singleAula != null; 
-        boolean camposValidos = (fieldIdAula.getText() != "") && (fieldNumeroSillas.getText() != "");
+        boolean camposValidos = (fieldIdAula.getText() != "") && 
+                (fieldEdificio.getText() != "") &&
+                (fieldNumeroSillas.getText() != "");
         return elemento && camposValidos;
     }
 

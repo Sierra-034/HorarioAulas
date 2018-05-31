@@ -22,9 +22,9 @@ import java.util.logging.Logger;
  */
 class MariaDaoAula implements DaoAula{
     
-    private final String[] COLUMNAS = {"ID_AULA", "NUMERO_SILLAS"};
-    private final String INSERT = "INSERT INTO aulas (ID_AULA, NUMERO_SILLAS) VALUES (?, ?)";
-    private final String UPDATE = "UPDATE aulas SET NUMERO_SILLAS = ? WHERE ID_AULA = ?";
+    private final String[] COLUMNAS = {"ID_AULA", "EDIFICIO", "NUMERO_SILLAS"};
+    private final String INSERT = "INSERT INTO aulas (ID_AULA, EDIFICIO, NUMERO_SILLAS) VALUES (?, ?, ?)";
+    private final String UPDATE = "UPDATE aulas SET EDIFICIO = ?, NUMERO_SILLAS = ? WHERE ID_AULA = ?";
     private final String DELETE = "DELETE FROM aulas WHERE ID_AULA = ?";
     private final String SELECT = "SELECT * FROM aulas WHERE ID_AULA = ?";
     private final String SELECT_ALL = "SELECT * FROM aulas";
@@ -39,7 +39,8 @@ class MariaDaoAula implements DaoAula{
         try {
             PreparedStatement insertStatement = mariaConnection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             insertStatement.setString(1, aula.getIdAula());
-            insertStatement.setInt(2, aula.getNumeroSillas());
+            insertStatement.setString(2, aula.getEdificio());
+            insertStatement.setInt(3, aula.getNumeroSillas());
             insertStatement.executeUpdate();
             ResultSet generatedKeys = insertStatement.getGeneratedKeys();
             if(generatedKeys.next())
@@ -54,8 +55,9 @@ class MariaDaoAula implements DaoAula{
     public void update(Aula aula) {
         try {
             PreparedStatement updateStatment = mariaConnection.prepareStatement(UPDATE);
-            updateStatment.setInt(1, aula.getNumeroSillas());
-            updateStatment.setString(2, aula.getIdAula());
+            updateStatment.setString(1, aula.getEdificio());
+            updateStatment.setInt(2, aula.getNumeroSillas());
+            updateStatment.setString(3, aula.getIdAula());
             updateStatment.executeUpdate();
             
         } catch (SQLException ex) {
@@ -85,8 +87,9 @@ class MariaDaoAula implements DaoAula{
             ResultSet rs = selectStatement.executeQuery();
             
             if(rs.next()) {
-                Integer numeroSillas = rs.getInt(COLUMNAS[1]);
-                aulaSolicitada = new Aula(idAula, numeroSillas);
+                String edificio = rs.getString(COLUMNAS[1]);
+                Integer numeroSillas = rs.getInt(COLUMNAS[2]);
+                aulaSolicitada = new Aula(idAula, edificio, numeroSillas);
             }
                 
         } catch (SQLException ex) {
@@ -105,8 +108,9 @@ class MariaDaoAula implements DaoAula{
             ResultSet rs = selectAllStatement.executeQuery();
             while(rs.next()) {
                 String idAula = rs.getString(COLUMNAS[0]);
-                Integer numeroSillas = rs.getInt(COLUMNAS[1]);
-                Aula aulaListada = new Aula(idAula, numeroSillas);
+                String edificio = rs.getString(COLUMNAS[1]);
+                Integer numeroSillas = rs.getInt(COLUMNAS[2]);
+                Aula aulaListada = new Aula(idAula, edificio, numeroSillas);
                 registros.add(aulaListada);
             }
             
