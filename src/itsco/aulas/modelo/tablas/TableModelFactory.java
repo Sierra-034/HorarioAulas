@@ -18,6 +18,7 @@ public class TableModelFactory {
     private TableModelDocente docente;
     private TableModelGrupo grupo;
     private TableModelMateria materia;
+    private TableModelHorario horario;
     
     private static TableModelFactory factory;
 
@@ -64,5 +65,12 @@ public class TableModelFactory {
         
         return materia;
     }  
+    
+    public TableModelHorario getTableModelHorario() {
+        if(horario == null) 
+            horario = new TableModelHorario(manager.createDaoHorario());
+        
+        return horario;
+    }
     
 }

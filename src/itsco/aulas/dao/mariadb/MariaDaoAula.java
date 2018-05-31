@@ -7,6 +7,7 @@ package itsco.aulas.dao.mariadb;
 
 import itsco.aulas.dao.DaoAula;
 import itsco.aulas.modelo.Aula;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +29,8 @@ class MariaDaoAula implements DaoAula{
     private final String DELETE = "DELETE FROM aulas WHERE ID_AULA = ?";
     private final String SELECT = "SELECT * FROM aulas WHERE ID_AULA = ?";
     private final String SELECT_ALL = "SELECT * FROM aulas";
+    private final String SELECT_EDIFICIOS = "{call EDIFICIOS_FROM_AULAS()}";
+    private final String SELECT_AULA_BY_EDIFICIO = "{call AULA_BY_EDIFICIO(?)}";
     private final Connection mariaConnection;
 
     public MariaDaoAula(Connection mariaConnection) {
@@ -119,6 +122,43 @@ class MariaDaoAula implements DaoAula{
         }
         
         return registros;
+    }
+
+    @Override
+    public ArrayList<String> selectEdificios() {
+        ArrayList<String> edificios = new ArrayList<>();
+        
+        try {
+            CallableStatement getEdificios = mariaConnection.prepareCall(SELECT_EDIFICIOS);
+            ResultSet rs = getEdificios.executeQuery();
+            while(rs.next()) {
+                String nombreEdificio = rs.getString("EDIFICIO");
+                edificios.add(nombreEdificio);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MariaDaoAula.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return edificios;
+    }
+
+    @Override
+    public ArrayList<String> aulaByEdificio(String nombreEdificio) {
+        ArrayList<String> aulas = new ArrayList<>();
+        
+        try {
+            CallableStatement getAulas = mariaConnection.prepareCall(SELECT_AULA_BY_EDIFICIO);
+            getAulas.setString(1, nombreEdificio);
+            ResultSet rs = getAulas.executeQuery();
+            while(rs.next()) {
+                String nombreAula = rs.getString("ID_AULA");
+                aulas.add(nombreAula);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MariaDaoAula.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return aulas;
     }
     
 }
