@@ -148,7 +148,10 @@ public class ApplicationHorario extends javax.swing.JFrame implements TreeSelect
         if(selectedNode == null)
             return;
         
-        if(selectedNode.isLeaf())
-            System.out.println(selectedNode.getUserObject());
+        if(selectedNode.isLeaf()) {
+            String idAula = selectedNode.getUserObject().toString();
+            modelHorario.loadDataByAula(idAula);
+            modelHorario.fireTableDataChanged();
+        }
     }
 }

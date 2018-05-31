@@ -28,8 +28,8 @@ public class TableModelHorario extends AbstractTableModel {
         registros = daoHorario.selectAll();
     }
     
-    public void loadDataByEdificio(String nombreEdificio) {
-        registros = daoHorario.selectByEdificio(nombreEdificio);
+    public void loadDataByAula(String idAula) {
+        registros = daoHorario.selectByAula(idAula);
     }
 
     @Override

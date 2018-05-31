@@ -14,6 +14,6 @@ import java.util.ArrayList;
  */
 public interface DaoHorario {
     
-    ArrayList<Horario> selectByEdificio(String nombreEdificio);
+    ArrayList<Horario> selectByAula(String idAula);
     ArrayList<Horario> selectAll();
 }

@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class MariaDaoHorario implements DaoHorario {
     
-    private final String SELECT_BY_EDIFICIO = "{call GENERATE_HORARIO_BY_EDIFICIO(?)}";
+    private final String SELECT_BY_AULA = "{call GENERATE_HORARIO_BY_AULA(?)}";
     private final String SELECT_ALL = "{call GENERATE_HORARIO()}";
     private Connection mariaConnection;
 
@@ -30,12 +30,12 @@ public class MariaDaoHorario implements DaoHorario {
     }
 
     @Override
-    public ArrayList<Horario> selectByEdificio(String nombreEdificio) {
+    public ArrayList<Horario> selectByAula(String idAula) {
         ArrayList<Horario> horarioByEdificio = new ArrayList<>();
         
         try {
-            CallableStatement byEdificio = mariaConnection.prepareCall(SELECT_BY_EDIFICIO);
-            byEdificio.setString(1, nombreEdificio);
+            CallableStatement byEdificio = mariaConnection.prepareCall(SELECT_BY_AULA);
+            byEdificio.setString(1, idAula);
             ResultSet rs = byEdificio.executeQuery();
             while(rs.next()) {
                 Horario registro = new Horario();
