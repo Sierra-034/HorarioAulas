@@ -5,10 +5,13 @@
  */
 package itsco.aulas.vista.frames;
 
+import itsco.aulas.dao.DaoAula;
 import itsco.aulas.dao.DaoManager;
 import itsco.aulas.dao.mariadb.MariaDaoManager;
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableModelHorario;
+import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
@@ -16,6 +19,8 @@ import itsco.aulas.modelo.tablas.TableModelHorario;
  */
 public class ApplicationHorario extends javax.swing.JFrame {
 
+    private DaoAula manager = MariaDaoManager.getInstance().createDaoAula();
+    private DefaultMutableTreeNode root;
     private TableModelHorario modelHorario;
     
     public ApplicationHorario() {
@@ -29,7 +34,7 @@ public class ApplicationHorario extends javax.swing.JFrame {
 
         jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        jTree1 = new javax.swing.JTree(root);
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -104,5 +109,28 @@ public class ApplicationHorario extends javax.swing.JFrame {
     private void initCustomComponents() {
         modelHorario = TableModelFactory.getInstance().getTableModelHorario();
         modelHorario.loadData();
+        createTreeNodes();
+    }
+
+    private void createTreeNodes() {
+        root = new DefaultMutableTreeNode("Edificios");
+        DefaultMutableTreeNode edificio = new DefaultMutableTreeNode();
+        ArrayList<String> nombreEdificios = manager.selectEdificios();
+        
+        for(String nombreEdificio : nombreEdificios) {
+            edificio = new DefaultMutableTreeNode(nombreEdificio);
+            createLiefNodes(edificio, nombreEdificio);
+            root.add(edificio);
+        }
+    }
+
+    private void createLiefNodes(DefaultMutableTreeNode edificio, String nombreEdificio) {
+        ArrayList<String> nombreAulas = manager.aulaByEdificio(nombreEdificio);
+        DefaultMutableTreeNode aula = new DefaultMutableTreeNode();
+        
+        for(String nombreAula : nombreAulas) {
+            aula = new DefaultMutableTreeNode(nombreAula);
+            edificio.add(aula);
+        }
     }
 }
