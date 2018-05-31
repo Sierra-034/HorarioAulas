@@ -5,15 +5,15 @@
  */
 package itsco.aulas.dao;
 
+import itsco.aulas.modelo.Horario;
+import java.util.ArrayList;
+
 /**
  *
  * @author Samuel Gomez
  */
-public interface DaoManager {
+public interface DaoHorario {
     
-    DaoAula createDaoAula();
-    DaoDocente createDaoDocente();
-    DaoGrupo createDaoGrupo();
-    DaoMateria createDaoMateria();
-    DaoHorario createDaoHorario();
+    ArrayList<Horario> selectByEdificio(String nombreEdificio);
+    ArrayList<Horario> selectAll();
 }

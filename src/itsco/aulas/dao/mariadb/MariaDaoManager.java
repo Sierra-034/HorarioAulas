@@ -8,6 +8,7 @@ package itsco.aulas.dao.mariadb;
 import itsco.aulas.dao.DaoAula;
 import itsco.aulas.dao.DaoDocente;
 import itsco.aulas.dao.DaoGrupo;
+import itsco.aulas.dao.DaoHorario;
 import itsco.aulas.dao.DaoManager;
 import itsco.aulas.dao.DaoMateria;
 import java.sql.Connection;
@@ -26,6 +27,7 @@ public class MariaDaoManager implements DaoManager {
     private DaoDocente daoDocente;
     private DaoGrupo daoGrupo;
     private DaoMateria daoMateria;
+    private DaoHorario daoHorario;
     
     private static DaoManager manager;
     private final String CONNECTION_STRING = "jdbc:mariadb://localhost:3306/horarioaulas";
@@ -80,6 +82,14 @@ public class MariaDaoManager implements DaoManager {
             daoMateria = new MariaDaoMateria(mariaConnection);
         
         return daoMateria;
+    }
+
+    @Override
+    public DaoHorario createDaoHorario() {
+        if(daoHorario == null)
+            daoHorario = new MariaDaoHorario(mariaConnection);
+        
+        return daoHorario;
     }
     
 }
