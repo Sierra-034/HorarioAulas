@@ -11,13 +11,16 @@ import itsco.aulas.dao.mariadb.MariaDaoManager;
 import itsco.aulas.modelo.tablas.TableModelFactory;
 import itsco.aulas.modelo.tablas.TableModelHorario;
 import java.util.ArrayList;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 
 /**
  *
  * @author Samuel Gomez
  */
-public class ApplicationHorario extends javax.swing.JFrame {
+public class ApplicationHorario extends javax.swing.JFrame implements TreeSelectionListener {
 
     private DaoAula manager = MariaDaoManager.getInstance().createDaoAula();
     private DefaultMutableTreeNode root;
@@ -34,9 +37,9 @@ public class ApplicationHorario extends javax.swing.JFrame {
 
         jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree(root);
+        treeEdificios = new javax.swing.JTree(root);
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        horarioGeneral = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,15 +50,17 @@ public class ApplicationHorario extends javax.swing.JFrame {
         jSplitPane1.setPreferredSize(new java.awt.Dimension(600, 500));
         jSplitPane1.setDividerLocation(200);
 
-        jScrollPane1.setViewportView(jTree1);
+        treeEdificios.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        treeEdificios.addTreeSelectionListener(this);
+        jScrollPane1.setViewportView(treeEdificios);
 
         jSplitPane1.setLeftComponent(jScrollPane1);
 
         jScrollPane2.setAutoscrolls(true);
 
-        jTable1.setModel(modelHorario);
-        jTable1.setPreferredSize(new java.awt.Dimension(150, 64));
-        jScrollPane2.setViewportView(jTable1);
+        horarioGeneral.setModel(modelHorario);
+        horarioGeneral.setPreferredSize(new java.awt.Dimension(150, 64));
+        jScrollPane2.setViewportView(horarioGeneral);
 
         jSplitPane1.setRightComponent(jScrollPane2);
 
@@ -99,11 +104,11 @@ public class ApplicationHorario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable horarioGeneral;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTree jTree1;
+    private javax.swing.JTree treeEdificios;
     // End of variables declaration//GEN-END:variables
 
     private void initCustomComponents() {
@@ -132,5 +137,18 @@ public class ApplicationHorario extends javax.swing.JFrame {
             aula = new DefaultMutableTreeNode(nombreAula);
             edificio.add(aula);
         }
+    }
+
+    @Override
+    public void valueChanged(TreeSelectionEvent e) {
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode) treeEdificios.getLastSelectedPathComponent();
+        
+        //No se seleccionó nada
+        if(selectedNode == null)
+            return;
+        
+        if(selectedNode.isLeaf())
+            System.out.println(selectedNode.getUserObject());
     }
 }
