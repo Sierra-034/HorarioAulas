@@ -14,4 +14,6 @@ import java.util.ArrayList;
  */
 public interface DaoAula extends GenericDao<Aula, String>{
     
+    ArrayList<String> selectEdificios();
+    ArrayList<String> aulaByEdificio(String nombreEdificio);
 }
